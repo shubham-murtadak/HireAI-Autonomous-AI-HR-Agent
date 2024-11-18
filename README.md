@@ -101,7 +101,7 @@ resume-insights-extractor/
 ---
 
 ### **Contributors**  
-- **Shubham Murtadak**:GenAI Developer and Architect  
+- **Shubham Murtadak**: GenAI Developer and Architect  
 
 ---
 
