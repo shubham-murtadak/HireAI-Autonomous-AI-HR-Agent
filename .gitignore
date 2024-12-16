@@ -4,3 +4,4 @@ Superceded/
 templates/
 app.py
 myenv/
+.env
