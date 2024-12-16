@@ -1,10 +1,7 @@
----
-
 # **RecruitAI ~ Autonomous AI HR Agent** 🤖✨  
 Your intelligent solution for transforming HR processes through automation and AI!  
 
 ---
-
 ## **🔍 Project Overview**
 
 **RecruitAI** is an intelligent HR agent revolutionizing recruitment with **Generative AI** 🤖, **NLP** 🧠, and **Machine Learning** 📊. It automates critical tasks like **job application screening** 📝, **resume parsing** 📄, **candidate ranking** 🏆, and **autonomous email monitoring** 📧 to streamline the hiring process.
@@ -16,7 +13,6 @@ Using **LLMs** and **function calling**, **RecruitAI** can:
 - **Conduct initial interviews** using **AI-powered conversations** 💬, **analyze responses** 📊, and **rank candidates** dynamically.  
 
 Say goodbye to tedious processes—**RecruitAI** ensures **faster**, **unbiased**, and **smarter** hiring decisions 🌟🚀.
-
 ---
 
 ## **🌟 Key Features**  
@@ -66,10 +62,10 @@ Say goodbye to tedious processes—**RecruitAI** ensures **faster**, **unbiased*
 
 ---
 
-## **📍 Work in Progress**  
-- **Refining Email Classification**: Improving the accuracy of email classification for better job-role categorization. 📧🔍  
-- **Interview Customization**: Enhancing sentiment analysis to dynamically adjust interview questions for a more personalized experience. 💬  
-- **Scalability Testing**: Scaling the system to handle high volumes of job applications and candidate emails efficiently. ⚙️  
+## 🚧 **Project Status**  
+⚠️ *This project is a work in progress!*  
+- **New features** and updates are continually being rolled out.  
+- **Stay tuned** for improvements in parsing accuracy, UI enhancements, and new integrations. 🚀
 
 ---
 
