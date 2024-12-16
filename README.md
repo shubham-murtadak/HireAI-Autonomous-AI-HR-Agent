@@ -1,20 +1,21 @@
+---
+
 # **RecruitAI ~ Autonomous AI HR Agent** 🤖✨  
 Your intelligent solution for transforming HR processes through automation and AI!  
+
 ---
+
 ## **🔍 Project Overview**
 
 **RecruitAI** is an intelligent HR agent revolutionizing recruitment with **Generative AI** 🤖, **NLP** 🧠, and **Machine Learning** 📊. It automates critical tasks like **job application screening** 📝, **resume parsing** 📄, **candidate ranking** 🏆, and **autonomous email monitoring** 📧 to streamline the hiring process.
 
 Using **LLMs** and **function calling**, **RecruitAI** can:
-- **Parse resumes** to extract essential details like **skills** 🛠️, **experience** 🏢, and **education** 🎓.  
+- **Monitor emails** automatically, classifying them based on **job roles** 🧑‍💼 and **other queries** 💬.
+- **Parse attachments resumes** to extract essential details like **skills** 🛠️, **experience** 🏢, and **education** 🎓.  
 - **Match candidates** to job descriptions for the best fit 📈.  
 - **Conduct initial interviews** using **AI-powered conversations** 💬, **analyze responses** 📊, and **rank candidates** dynamically.  
-- **Monitor emails** automatically, classifying them based on **job roles** 🧑‍💼 and **other queries** 💬.
 
 Say goodbye to tedious processes—**RecruitAI** ensures **faster**, **unbiased**, and **smarter** hiring decisions 🌟🚀.
-
----
- 
 
 ---
 
@@ -54,24 +55,21 @@ Say goodbye to tedious processes—**RecruitAI** ensures **faster**, **unbiased*
 ---
 
 ## **💻 Technologies Used**  
-- **🤖 LLMs & Function Calling**: Automate recruitment workflows and decisions.  
-- **🔍 NLP**: Analyze and parse resumes for essential information.  
-- **📊 Machine Learning**: Rank and score candidates efficiently.  
-- **⚙️ Automation Tools**: Integrate seamlessly into HR workflows.  
+- **🤖 LLMs & Function Calling**: Automate recruitment workflows and decisions using **Gemini-1.5-Pro** and **Mixtral 8x7B** models.  
+- **📄 Resume Parsing**: Utilize **LLMParser** for effective resume analysis and parsing.  
+- **📧 Email Classification**: Leverage **Mixtral LLM model** for efficient email classification.  
+- **⚙️ Agent Framework**: Build the agent using **AutoGen Framework** to ensure smooth workflow automation.  
+- **🧠 Vector Database**: Use **Milvus** for powerful and fast vector-based data retrieval.  
+- **📧 Email Monitoring**: Implement **IMAP** for real-time email monitoring and actions.  
+- **💻 Frontend**: Develop the interface using **React** for an interactive and responsive user experience.  
+- **🔧 Backend**: Use **FastAPI** to build a fast and efficient backend for seamless integration and processing.  
 
 ---
 
-## **🚀 Implementation Insights**  
-1. **Leverage LLMs**: Utilize models like **GPT-4** for resume parsing and conversational interactions.  
-2. **Dynamic Decision-Making**: Automate scoring, scheduling, and ranking with **function calling**.  
-3. **Sentiment Analysis**: Adjust interview flow based on candidate responses.  
-
----
-
-## **💡 Key Learning Areas**  
-- **AI in HR**: Building intelligent agents for recruitment. 🧠  
-- **NLP Techniques**: Processing resumes to extract meaningful insights. 📑  
-- **Dynamic Automation**: Combining AI with function calling for streamlined workflows. ⚙️  
+## **📍 Work in Progress**  
+- **Refining Email Classification**: Improving the accuracy of email classification for better job-role categorization. 📧🔍  
+- **Interview Customization**: Enhancing sentiment analysis to dynamically adjust interview questions for a more personalized experience. 💬  
+- **Scalability Testing**: Scaling the system to handle high volumes of job applications and candidate emails efficiently. ⚙️  
 
 ---
 
