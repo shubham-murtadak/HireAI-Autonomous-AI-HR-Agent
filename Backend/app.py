@@ -74,7 +74,7 @@ PROJECT_HOME_PATH=os.getenv('PROJECT_HOME_PATH')
 
 
 # Initialize Embeddings
-embed_model = FastEmbedEmbeddings(model_name="BAAI/bge-base-en-v1.5")
+embed_model = FastEmbedEmbeddings(model_name="BAAI/bge-base-en-v1.5",cache_dir='./cache')
 
 
 
@@ -117,7 +117,6 @@ def upload_pdf():
 
             return render_template('index.html', timestamp=timestamp)
         
-
 
 
 if __name__ == '__main__':
