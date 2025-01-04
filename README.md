@@ -1,4 +1,4 @@
-# **RecruitAI ~ Autonomous AI HR Agent** 🤖✨  
+# **HireAI ~ Autonomous AI HR Agent** 🤖✨  
 Your intelligent solution for transforming HR processes through automation and AI!  
 
 ---
