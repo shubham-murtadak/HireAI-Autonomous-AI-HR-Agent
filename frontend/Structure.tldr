@@ -239,7 +239,7 @@
 				"labelColor": "black",
 				"fill": "solid",
 				"dash": "draw",
-				"size": "m",
+				"size": "s",
 				"font": "sans",
 				"text": "",
 				"align": "middle",
@@ -253,7 +253,7 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 319.63759132510955,
+			"x": 314.413634263342,
 			"y": 286.4401571110655,
 			"rotation": 0,
 			"isLocked": false,
@@ -264,8 +264,8 @@
 			"props": {
 				"color": "black",
 				"size": "s",
-				"w": 66.98958587646484,
-				"text": "Joi Now",
+				"w": 77.4375,
+				"text": "Join Now",
 				"font": "sans",
 				"textAlign": "middle",
 				"autoSize": true,
@@ -274,90 +274,6 @@
 			"parentId": "page:page",
 			"index": "a97gg",
 			"typeName": "shape"
-		},
-		{
-			"id": "pointer:pointer",
-			"typeName": "pointer",
-			"x": 1991.5916915312816,
-			"y": 682.2892171272865,
-			"lastActivityTimestamp": 1735835911905,
-			"meta": {}
-		},
-		{
-			"followingUserId": null,
-			"opacityForNextShape": 0.5,
-			"stylesForNextShape": {
-				"tldraw:fill": "none",
-				"tldraw:geo": "rectangle",
-				"tldraw:font": "sans",
-				"tldraw:size": "s",
-				"tldraw:dash": "solid",
-				"tldraw:color": "black",
-				"tldraw:textAlign": "middle"
-			},
-			"brush": null,
-			"scribbles": [],
-			"cursor": {
-				"type": "default",
-				"rotation": 0
-			},
-			"isFocusMode": false,
-			"exportBackground": true,
-			"isDebugMode": false,
-			"isToolLocked": false,
-			"screenBounds": {
-				"x": 0,
-				"y": 0,
-				"w": 1232,
-				"h": 605.3333740234375
-			},
-			"insets": [
-				false,
-				false,
-				true,
-				false
-			],
-			"zoomBrush": null,
-			"isGridMode": false,
-			"isPenMode": false,
-			"chatMessage": "",
-			"isChatting": false,
-			"highlightedUserIds": [],
-			"isFocused": true,
-			"devicePixelRatio": 1.5,
-			"isCoarsePointer": false,
-			"isHoveringCanvas": false,
-			"openMenus": [],
-			"isChangingStyle": true,
-			"isReadonly": false,
-			"meta": {},
-			"duplicateProps": null,
-			"id": "instance:instance",
-			"currentPageId": "page:page",
-			"typeName": "instance"
-		},
-		{
-			"editingShapeId": "shape:4JELn12rcB8oXi-oiBHu7",
-			"croppingShapeId": null,
-			"selectedShapeIds": [
-				"shape:4JELn12rcB8oXi-oiBHu7"
-			],
-			"hoveredShapeId": null,
-			"erasingShapeIds": [],
-			"hintingShapeIds": [],
-			"focusedGroupId": null,
-			"meta": {},
-			"id": "instance_page_state:page:page",
-			"pageId": "page:page",
-			"typeName": "instance_page_state"
-		},
-		{
-			"x": -665.8874616029395,
-			"y": -378.0156669184866,
-			"z": 0.804101018918777,
-			"meta": {},
-			"id": "camera:page:page",
-			"typeName": "camera"
 		},
 		{
 			"x": 187.26256276551135,
@@ -1423,6 +1339,84 @@
 			"parentId": "page:page",
 			"index": "ak8XD",
 			"typeName": "shape"
+		},
+		{
+			"id": "pointer:pointer",
+			"typeName": "pointer",
+			"x": 686.7303944348276,
+			"y": 283.38510267558144,
+			"lastActivityTimestamp": 1735988254990,
+			"meta": {}
+		},
+		{
+			"followingUserId": null,
+			"opacityForNextShape": 1,
+			"stylesForNextShape": {
+				"tldraw:size": "s"
+			},
+			"brush": null,
+			"scribbles": [],
+			"cursor": {
+				"type": "default",
+				"rotation": 0
+			},
+			"isFocusMode": false,
+			"exportBackground": true,
+			"isDebugMode": false,
+			"isToolLocked": false,
+			"screenBounds": {
+				"x": 0,
+				"y": 0,
+				"w": 1035.3333740234375,
+				"h": 405.3333435058594
+			},
+			"insets": [
+				false,
+				false,
+				true,
+				false
+			],
+			"zoomBrush": null,
+			"isGridMode": false,
+			"isPenMode": false,
+			"chatMessage": "",
+			"isChatting": false,
+			"highlightedUserIds": [],
+			"isFocused": true,
+			"devicePixelRatio": 1.5,
+			"isCoarsePointer": false,
+			"isHoveringCanvas": false,
+			"openMenus": [],
+			"isChangingStyle": true,
+			"isReadonly": false,
+			"meta": {},
+			"duplicateProps": null,
+			"id": "instance:instance",
+			"currentPageId": "page:page",
+			"typeName": "instance"
+		},
+		{
+			"editingShapeId": null,
+			"croppingShapeId": null,
+			"selectedShapeIds": [
+				"shape:1xHOzGSw22IjA4qoXClyj"
+			],
+			"hoveredShapeId": "shape:qD2jEG64iGGZyigoa5aGe",
+			"erasingShapeIds": [],
+			"hintingShapeIds": [],
+			"focusedGroupId": null,
+			"meta": {},
+			"id": "instance_page_state:page:page",
+			"pageId": "page:page",
+			"typeName": "instance_page_state"
+		},
+		{
+			"x": -284.17835448926144,
+			"y": -183.32085557394697,
+			"z": 2.1786003124430557,
+			"meta": {},
+			"id": "camera:page:page",
+			"typeName": "camera"
 		}
 	]
 }
