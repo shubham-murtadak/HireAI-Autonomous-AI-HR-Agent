@@ -65,12 +65,7 @@ Say goodbye to tedious processes—**RecruitAI** ensures **faster**, **unbiased*
 ## 🚧 **Project Status**  
 ⚠️ *This project is a work in progress!*  
 - **New features** and updates are continually being rolled out.  
-- **Stay tuned** for improvements in parsing accuracy, UI enhancements, and new integrations. 🚀
-
----
-
-## **🤝 Contributors**  
-- **Shubham Murtadak**: AI Engineer 🧑‍💻
+- **Stay tuned** for improvements in parsing accuracy, UI enhancements, and new integrations. 
 
 ---
 
