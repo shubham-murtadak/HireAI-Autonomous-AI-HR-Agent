@@ -2,23 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom"; // Import Link
 
 import "./Navbar.css";
+import { Typography } from "@mui/material";
 function Navbar() {
   return (
     <>
       <div className="navbar">
         <div className="navbar-logo">
-          <h1>Hire.ai</h1>
+          <Typography variant="h3">Hire.ai</Typography>
         </div>
         <div className="navbar-menus">
           <ul>
             <li>
-              <Link to="/why-us">Why us?</Link> {/* Use 'to' for navigation */}
+              <Link to="/why-us">
+                <Typography variant="h6">Why us?</Typography>
+              </Link>
             </li>
             <li>
-              <Link to="/candidate-login">Candidate Login</Link>
+              <Link to="/candidate-login">
+                <Typography variant="h6">Candidate Login</Typography>
+              </Link>
             </li>
             <li>
-              <Link to="/hr-login">HR Login</Link>
+              <Link to="/hr-login">
+                <Typography variant="h6">HR Login</Typography>
+              </Link>
             </li>
           </ul>
         </div>
