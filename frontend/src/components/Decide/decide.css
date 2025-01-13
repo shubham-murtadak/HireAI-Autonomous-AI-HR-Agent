@@ -1,0 +1,15 @@
+.decidecontainer {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.nav {
+  background-color: #02305e;
+  color: white;
+}
+.img {
+  width: 400px;
+  height: 300px;
+}
