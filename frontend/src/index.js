@@ -1,13 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material/styles";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#2E073F",
+      contrastText: "#FFFFFF", // Ensure text is readable on the dark primary color
+    },
+    secondary: {
+      main: "#7A1CAC",
+      contrastText: "#FFFFFF",
+    },
+    background: {
+      default: "#EBD3F8",
+      paper: "#FFFFFF", // Paper components will have a lighter background
+    },
+    text: {
+      primary: "#2E073F",
+      secondary: "#7A1CAC",
+    },
+    accent: {
+      main: "#AD49E1",
+    },
+  },
+  typography: {
+    fontFamily: "Roboto, Arial, sans-serif",
+  },
+});
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

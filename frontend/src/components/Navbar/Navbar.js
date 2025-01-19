@@ -7,7 +7,9 @@ function Navbar({ user, handleLogout }) {
   return (
     <div className="navbar">
       <div className="navbar-logo">
-        <Typography variant="h3">Hire.ai</Typography>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <Typography variant="h3">Hire.ai</Typography>
+        </Link>
       </div>
       <div className="navbar-menus">
         <ul>

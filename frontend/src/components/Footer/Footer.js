@@ -13,22 +13,22 @@ function Footer() {
       <footer>
         <Container maxWidth="lg" className="footermain">
           <div className="footertop">
-            <InstagramIcon color="primary" fontSize="large" />
-            <FacebookIcon color="primary" fontSize="large" />
-            <YoutubeIcon color="primary" fontSize="large" />
+            <InstagramIcon color="secondary" fontSize="large" />
+            <FacebookIcon color="secondary" fontSize="large" />
+            <YoutubeIcon color="secondary" fontSize="large" />
           </div>
           <div className="footerbottom">
             <Link to="/">
-              <Button>Home</Button>
+              <Button color="secondary">Home</Button>
             </Link>
             <Link to="/candidate-login">
-              <Button>Candidate login</Button>
+              <Button color="secondary">Candidate login</Button>
             </Link>
             <Link to="/hr-login">
-              <Button>HR Login</Button>
+              <Button color="secondary">HR Login</Button>
             </Link>
             <Link to="/why-us">
-              <Button>Why us?</Button>
+              <Button color="secondary">Why us?</Button>
             </Link>
           </div>
         </Container>
