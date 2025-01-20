@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 footer {
-  height: 15rem;
+  height: 10rem;
   width: 100%;
   background-color: #1d1d1d;
 }
@@ -23,7 +23,7 @@ footer {
   padding: 2rem;
 }
 .footertop {
-  padding: 2rem;
+  padding: 1rem;
   width: 70%;
   display: flex;
   justify-content: space-evenly;

@@ -23,6 +23,7 @@ const theme = createTheme({
     text: {
       primary: "#2E073F",
       secondary: "#7A1CAC",
+      dark: "black",
     },
     accent: {
       main: "#AD49E1",

@@ -22,10 +22,10 @@ function Footer() {
               <Button color="secondary">Home</Button>
             </Link>
             <Link to="/candidate-login">
-              <Button color="secondary">Candidate login</Button>
+              <Button color="secondary">Post a Job Opening</Button>
             </Link>
             <Link to="/hr-login">
-              <Button color="secondary">HR Login</Button>
+              <Button color="secondary">Find a Job</Button>
             </Link>
             <Link to="/why-us">
               <Button color="secondary">Why us?</Button>
