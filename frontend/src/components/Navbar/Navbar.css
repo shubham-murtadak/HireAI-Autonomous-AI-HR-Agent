@@ -1,15 +1,13 @@
 .navbar {
+  height: 5rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #02305e;
-  color: #fff;
 }
 
 .navbar-logo h1 {
   margin: 0;
   font-size: 2rem;
-  color: #fff;
 }
 
 .navbar-menus > ul {
@@ -27,13 +25,13 @@
 .navbar-menus > ul > li > a {
   font-size: 1rem;
   cursor: pointer;
-  color: #fff;
   text-decoration: none;
   transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
 .navbar-menus > ul > li > a:hover {
-  color: #ffcc00;
+  color: black;
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {

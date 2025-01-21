@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Footer from "../Footer/Footer";
+import { Link } from "react-router-dom";
 function Homepage() {
   return (
     <>
@@ -15,17 +16,29 @@ function Homepage() {
             Hire.ai
           </Typography>
           <Typography variant="h3" color="initial">
-            is an ai company <br /> creating a portel to make <br /> hiring
+            is an ai company <br /> creating a portal to make <br /> hiring
             process seamless
           </Typography>
           <br />
-          <Button variant="outlined" target="#" color="primary">
-            Join Now
-          </Button>
+          <Link to="/jobpost">
+            <Button
+              variant="outlined"
+              sx={{ mr: "1rem" }}
+              target="#"
+              color="primary"
+            >
+              Post Job Openning
+            </Button>
+          </Link>
+          <Link to="/findjob">
+            <Button variant="outlined" target="#" color="primary">
+              Find Job
+            </Button>
+          </Link>
         </div>
         <div className="right">
           <div className="img">
-            <img src="#" alt="alternate" />
+            <img src="./human_resource.jpg" height={350} alt="alternate" />
           </div>
         </div>
       </Container>
