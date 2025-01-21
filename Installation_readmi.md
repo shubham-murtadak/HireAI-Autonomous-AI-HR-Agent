@@ -1,9 +1,8 @@
 ## 🚀 Getting Started
 
-### 1. Clone the Repository
+### 1. pull the branch
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git pull origin development
 ```
 
 ---
