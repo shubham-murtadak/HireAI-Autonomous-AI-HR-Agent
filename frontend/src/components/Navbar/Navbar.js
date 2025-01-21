@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Avatar, Typography } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import LogoutIcon from "@mui/icons-material/Logout";
+import WorkIcon from "@mui/icons-material/Work";
+import {
+  Avatar,
+  Typography,
+  Popper,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  MenuItem,
+  Grow,
+  Button,
+} from "@mui/material";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import "./Navbar.css";
 
 function Navbar() {
   const [user, setUser] = useState(null);
-  const auth = getAuth(); // Initialize Firebase Auth
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const auth = getAuth();
 
   // Logout Handler
   const handleLogout = async () => {
@@ -21,21 +36,25 @@ function Navbar() {
   // Check for Authentication State Changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-      }
+      setUser(currentUser ? currentUser : null);
     });
-
     return () => unsubscribe();
   }, [auth]);
+
+  const handleAvatarClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div className="navbar">
       <div className="navbar-logo">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <Typography variant="h3" color="primary">
+          <Typography variant="h2" color="primary" fontWeight="500">
             Hire.ai
           </Typography>
         </Link>
@@ -43,41 +62,85 @@ function Navbar() {
       <div className="navbar-menus">
         <ul>
           {user ? (
-            // Show user profile image and logout button when logged in
             <>
               <li>
-                <Link to="/profile" style={{ textDecoration: "none" }}>
-                  <Avatar
-                    src={user.photoURL || ""}
-                    alt={user.displayName || "User"}
-                    style={{
-                      marginTop: "3px",
-                      width: 30,
-                      height: 30,
-                      cursor: "pointer",
-                    }}
-                  />
-                </Link>
-              </li>
-              <li>
-                <Button
-                  variant="text"
-                  color="secondary"
-                  onClick={handleLogout}
-                  className="logout-btn"
+                <Avatar
+                  src={user.photoURL || ""}
+                  alt={user.displayName || "User"}
+                  style={{
+                    marginTop: "3px",
+                    width: 30,
+                    height: 30,
+                    cursor: "pointer",
+                  }}
+                  onClick={handleAvatarClick}
+                />
+                <Popper
+                  open={open}
+                  anchorEl={anchorEl}
+                  role={undefined}
+                  transition
+                  placement="bottom-end"
                 >
-                  Logout
-                </Button>
+                  {({ TransitionProps }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin: "right top",
+                      }}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={handleClose}>
+                          <MenuList autoFocusItem={open}>
+                            <MenuItem onClick={handleClose}>
+                              <Link
+                                to="/myjobs"
+                                style={{
+                                  textDecoration: "none",
+                                  color: "inherit",
+                                }}
+                              >
+                                <Button startIcon={<WorkIcon />}>
+                                  My Jobs
+                                </Button>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                              <Link
+                                to="/account"
+                                style={{
+                                  textDecoration: "none",
+                                  color: "inherit",
+                                }}
+                              >
+                                <Button startIcon={<InfoIcon />}>
+                                  Account Info
+                                </Button>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                handleLogout();
+                                handleClose();
+                              }}
+                            >
+                              <Button startIcon={<LogoutIcon />}>
+                                Sign Out
+                              </Button>
+                            </MenuItem>
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
               </li>
             </>
           ) : (
-            // Show Signup/Login links when not logged in
             <>
               <li>
                 <Link to="/login">
-                  <Typography variant="h6" color="initial">
-                    Login
-                  </Typography>
+                  <Button variant="outlined">Login / Sign Up</Button>
                 </Link>
               </li>
             </>

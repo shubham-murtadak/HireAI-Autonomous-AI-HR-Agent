@@ -5,6 +5,8 @@ import Homepage from "./components/Homepage/Homepage";
 import Profile from "./Pages/Profile";
 import FindJob from "./Pages/FindJob";
 import JobPost from "./Pages/JobPost";
+import Account from "./Pages/Account";
+import MyJobs from "./Pages/MyJobs";
 function App() {
   return (
     <>
@@ -17,6 +19,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/jobpost" element={<JobPost />} />
           <Route path="/findjob" element={<FindJob />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/myjobs" element={<MyJobs />} />
         </Routes>
       </Router>
     </>

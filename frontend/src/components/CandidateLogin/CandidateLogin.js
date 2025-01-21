@@ -25,7 +25,7 @@ function CandidateLogin() {
       navigate("/"); // Redirect to home page after successful login
     } catch (error) {
       console.error("Google Sign-In Error:", error.message);
-      // Optionally, display an error message to the user
+      <Typography variant="h5">Chech Your Internet</Typography>;
     }
   };
 

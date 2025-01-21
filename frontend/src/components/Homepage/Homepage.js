@@ -38,7 +38,7 @@ function Homepage() {
         </div>
         <div className="right">
           <div className="img">
-            <img src="#" alt="alternate" />
+            <img src="./human_resource.jpg" height={350} alt="alternate" />
           </div>
         </div>
       </Container>

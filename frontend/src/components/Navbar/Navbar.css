@@ -1,9 +1,8 @@
 .navbar {
-  height: 4rem;
+  height: 5rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #ebd3f8;
 }
 
 .navbar-logo h1 {
