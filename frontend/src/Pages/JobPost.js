@@ -8,6 +8,7 @@ import {
   Box,
   Grid,
 } from "@mui/material";
+import axios from "axios";
 
 function JobPost() {
   const [formData, setFormData] = useState({
@@ -27,17 +28,33 @@ function JobPost() {
     setFormData((prevState) => ({ ...prevState, resume: e.target.files[0] }));
   };
 
-  const handleSubmit = () => {
-    console.log("Form Data Submitted:", formData);
-    alert("Job Posted Successfully!");
-    // Reset the form
-    setFormData({
-      title: "",
-      description: "",
-      location: "",
-      company: "",
-      resume: null,
-    });
+  const handleSubmit = async () => {
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("location", formData.location);
+    data.append("company", formData.company);
+    data.append("resume", formData.resume);
+
+    try {
+      const response = await axios.post("http://localhost:8000/job-post", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Response:", response.data);
+      alert("Job Posted Successfully!");
+      setFormData({
+        title: "",
+        description: "",
+        location: "",
+        company: "",
+        resume: null,
+      });
+    } catch (error) {
+      console.error("Error posting job:", error);
+      alert("Failed to post the job.");
+    }
   };
 
   return (
@@ -51,7 +68,6 @@ function JobPost() {
           component="form"
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}
         >
-          {/* Job Title */}
           <TextField
             label="Job Title"
             variant="outlined"
@@ -60,7 +76,6 @@ function JobPost() {
             value={formData.title}
             onChange={handleChange}
           />
-          {/* Job Description */}
           <TextField
             label="Job Description"
             variant="outlined"
@@ -71,7 +86,6 @@ function JobPost() {
             value={formData.description}
             onChange={handleChange}
           />
-          {/* Job Location */}
           <TextField
             label="Job Location"
             variant="outlined"
@@ -80,7 +94,6 @@ function JobPost() {
             value={formData.location}
             onChange={handleChange}
           />
-          {/* Company */}
           <TextField
             label="Company"
             variant="outlined"
@@ -89,7 +102,6 @@ function JobPost() {
             value={formData.company}
             onChange={handleChange}
           />
-          {/* Resume Upload */}
           <Grid container alignItems="center" spacing={2}>
             <Grid item xs={12} sm={6}>
               <Button variant="outlined" component="label" fullWidth>
@@ -105,7 +117,6 @@ function JobPost() {
               </Grid>
             )}
           </Grid>
-          {/* Submit Button */}
           <Button
             variant="contained"
             color="primary"
