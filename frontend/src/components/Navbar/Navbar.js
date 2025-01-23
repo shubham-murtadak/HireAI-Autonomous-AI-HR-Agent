@@ -54,9 +54,7 @@ function Navbar() {
     <div className="navbar">
       <div className="navbar-logo">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <Typography variant="h2" color="primary" fontWeight="500">
-            Hire.ai
-          </Typography>
+          <img src="/Assets/WhiteBgColor.png" height={60} />
         </Link>
       </div>
       <div className="navbar-menus">

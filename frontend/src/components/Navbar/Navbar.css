@@ -1,8 +1,12 @@
 .navbar {
   height: 5rem;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgb(182, 182, 182);
+  padding: 0 10rem 0 10rem;
+  background-color: #f7f7f7;
 }
 
 .navbar-logo h1 {
