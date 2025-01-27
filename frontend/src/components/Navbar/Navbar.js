@@ -4,6 +4,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import WorkIcon from "@mui/icons-material/Work";
 import HomeIcon from "@mui/icons-material/Home";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Avatar,
   Typography,
@@ -14,15 +15,23 @@ import {
   MenuItem,
   Grow,
   Button,
+  IconButton,
+  Drawer,
+  Box,
 } from "@mui/material";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useMediaQuery } from "@mui/material";
 import "./Navbar.css";
 
 function Navbar() {
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const auth = getAuth();
+
+  // Check screen size for responsiveness
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   // Logout Handler
   const handleLogout = async () => {
@@ -51,17 +60,62 @@ function Navbar() {
     setOpen(false);
   };
 
+  const toggleDrawer = (state) => {
+    setDrawerOpen(state);
+  };
+
+  const renderMenuItems = () => (
+    <>
+      {user ? (
+        <>
+          <MenuItem onClick={handleClose}>
+            <Link to="/" className="nav-link">
+              <Button startIcon={<HomeIcon />}>Home</Button>
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link to="/myjobs" className="nav-link">
+              <Button startIcon={<WorkIcon />}>My Jobs</Button>
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link to="/account" className="nav-link">
+              <Button startIcon={<InfoIcon />}>Account Info</Button>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleLogout();
+              handleClose();
+            }}
+          >
+            <Button startIcon={<LogoutIcon />}>Sign Out</Button>
+          </MenuItem>
+        </>
+      ) : (
+        <MenuItem onClick={handleClose}>
+          {/* We can more menu in future */}
+
+          <Link to="/login" className="nav-link">
+            <Button variant="outlined">Login / Sign Up</Button>
+          </Link>
+        </MenuItem>
+      )}
+    </>
+  );
+
   return (
     <div className="navbar">
       <div className="navbar-logo">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <img src="/Assets/WhiteBgColor.png" height={60} />
+        <Link to="/" className="logo-link">
+          <img src="./Assets/whiteBgColor.png" height={60} alt="Not found" />
         </Link>
       </div>
-      <div className="navbar-menus">
-        <ul>
-          {user ? (
-            <>
+      {!isMobile ? (
+        <div className="navbar-menus">
+          <ul>
+            {renderMenuItems()}
+            {user && (
               <li>
                 <Avatar
                   src={user.photoURL || ""}
@@ -92,57 +146,7 @@ function Navbar() {
                       <Paper>
                         <ClickAwayListener onClickAway={handleClose}>
                           <MenuList autoFocusItem={open}>
-                            <MenuItem onClick={handleClose}>
-                              <Link
-                                to="/"
-                                style={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
-                              >
-                                <Button
-                                  startIcon={<HomeIcon fontSize="large" />}
-                                >
-                                  Home
-                                </Button>
-                              </Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleClose}>
-                              <Link
-                                to="/myjobs"
-                                style={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
-                              >
-                                <Button startIcon={<WorkIcon />}>
-                                  My Jobs
-                                </Button>
-                              </Link>
-                            </MenuItem>
-                            <MenuItem onClick={handleClose}>
-                              <Link
-                                to="/account"
-                                style={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
-                              >
-                                <Button startIcon={<InfoIcon />}>
-                                  Account Info
-                                </Button>
-                              </Link>
-                            </MenuItem>
-                            <MenuItem
-                              onClick={() => {
-                                handleLogout();
-                                handleClose();
-                              }}
-                            >
-                              <Button startIcon={<LogoutIcon />}>
-                                Sign Out
-                              </Button>
-                            </MenuItem>
+                            {renderMenuItems()}
                           </MenuList>
                         </ClickAwayListener>
                       </Paper>
@@ -150,18 +154,37 @@ function Navbar() {
                   )}
                 </Popper>
               </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/login">
-                  <Button variant="outlined">Login / Sign Up</Button>
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
-      </div>
+            )}
+          </ul>
+        </div>
+      ) : (
+        <>
+          <IconButton
+            onClick={() => toggleDrawer(true)}
+            className="menu-icon"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Drawer
+            anchor="right"
+            open={drawerOpen}
+            onClose={() => toggleDrawer(false)}
+          >
+            <Box
+              sx={{
+                width: 250,
+                padding: "1rem",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              {renderMenuItems()}
+            </Box>
+          </Drawer>
+        </>
+      )}
     </div>
   );
 }

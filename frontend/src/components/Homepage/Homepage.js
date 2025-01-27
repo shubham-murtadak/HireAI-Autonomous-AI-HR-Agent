@@ -3,7 +3,7 @@ import "./Homepage.css";
 import Navbar from "../Navbar/Navbar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import Chatbot from "../Chatbot/Chatbot"; // Import Chatbot
@@ -12,43 +12,70 @@ function Homepage() {
   return (
     <>
       <Navbar />
-      <Container className="container" maxWidth="lg" bgcolor="primary">
-        <div className="left">
-          <Typography variant="h2" color="primary">
+      <Container
+        maxWidth="lg"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexDirection: { xs: "column", md: "row" }, // Responsive layout
+          gap: 3,
+          mt: 4,
+        }}
+      >
+        {/* Left Section */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: { xs: "center", md: "flex-start" },
+            textAlign: { xs: "center", md: "left" },
+          }}
+        >
+          <Typography variant="h2" color="primary" gutterBottom>
             Hire.ai
           </Typography>
-          <Typography variant="h3" color="initial">
+          <Typography variant="h4" color="textPrimary" gutterBottom>
             is an AI company <br /> creating a portal to make <br /> hiring
             process seamless
           </Typography>
-          <br />
-          <Link to="/jobpost">
-            <Button
-              variant="outlined"
-              sx={{ mr: "1rem" }}
-              target="#"
-              color="primary"
+          <Box sx={{ mt: 3 }}>
+            <Link
+              to="/jobpost"
+              style={{ textDecoration: "none", marginRight: "1rem" }}
             >
-              Post Job Opening
-            </Button>
-          </Link>
-          <Link to="/findjob">
-            <Button variant="outlined" target="#" color="primary">
-              Find Job
-            </Button>
-          </Link>
-        </div>
-        <div className="right">
-          <div className="img">
-            <img src="./human_resource.jpg" height={350} alt="alternate" />
-          </div>
-        </div>
-      </Container>
-      
-      {/* Embed the Chatbot component here */}
-      <Chatbot /> 
+              <Button variant="outlined" color="primary">
+                Post Job Opening
+              </Button>
+            </Link>
+            <Link to="/findjob" style={{ textDecoration: "none" }}>
+              <Button variant="outlined" color="primary">
+                Find Job
+              </Button>
+            </Link>
+          </Box>
+        </Box>
 
-      <Footer />
+        {/* Right Section */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src="./human_resource.jpg"
+            height={350}
+            alt="Human Resource Illustration"
+            style={{ maxWidth: "100%", borderRadius: "8px" }}
+          />
+        </Box>
+      </Container>
+
+      {/* Embed the Chatbot component */}
+      <Chatbot />
     </>
   );
 }

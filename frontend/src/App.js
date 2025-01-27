@@ -8,24 +8,29 @@ import JobPost from "./Pages/JobPost";
 import Account from "./Pages/Account";
 import MyJobs from "./Pages/MyJobs";
 import Chatbot from "./components/Chatbot/Chatbot";
+import Footer from "./components/Footer/Footer";
+
 function App() {
   return (
-    <>
+    <div className="App">
       <Router>
-        <Routes>
-          <Route path="/why-us" element={<div>Why Us Page</div>} />
-          <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<CandidateLogin />} />
-          <Route path="/hr-login" element={<div>HR Login Page</div>} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/jobpost" element={<JobPost />} />
-          <Route path="/findjob" element={<FindJob />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/myjobs" element={<MyJobs />} />
-          <Route path="/chatbot" element={<Chatbot />} />
-        </Routes>
+        <div className="App-content">
+          <Routes>
+            <Route path="/why-us" element={<div>Why Us Page</div>} />
+            <Route path="/" element={<Homepage />} />
+            <Route path="/login" element={<CandidateLogin />} />
+            <Route path="/hr-login" element={<div>HR Login Page</div>} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/jobpost" element={<JobPost />} />
+            <Route path="/findjob" element={<FindJob />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/myjobs" element={<MyJobs />} />
+            <Route path="/chatbot" element={<Chatbot />} />
+          </Routes>
+        </div>
+        <Footer />
       </Router>
-    </>
+    </div>
   );
 }
 
