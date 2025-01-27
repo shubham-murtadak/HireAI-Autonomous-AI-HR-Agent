@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import WorkIcon from "@mui/icons-material/Work";
+import HomeIcon from "@mui/icons-material/Home";
 import {
   Avatar,
   Typography,
@@ -70,6 +71,7 @@ function Navbar() {
                     width: 30,
                     height: 30,
                     cursor: "pointer",
+                    border: "2px solid black",
                   }}
                   onClick={handleAvatarClick}
                 />
@@ -90,6 +92,21 @@ function Navbar() {
                       <Paper>
                         <ClickAwayListener onClickAway={handleClose}>
                           <MenuList autoFocusItem={open}>
+                            <MenuItem onClick={handleClose}>
+                              <Link
+                                to="/"
+                                style={{
+                                  textDecoration: "none",
+                                  color: "inherit",
+                                }}
+                              >
+                                <Button
+                                  startIcon={<HomeIcon fontSize="large" />}
+                                >
+                                  Home
+                                </Button>
+                              </Link>
+                            </MenuItem>
                             <MenuItem onClick={handleClose}>
                               <Link
                                 to="/myjobs"

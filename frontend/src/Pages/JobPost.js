@@ -37,11 +37,15 @@ function JobPost() {
     data.append("resume", formData.resume);
 
     try {
-      const response = await axios.post("http://localhost:8000/job-post", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8000/job-post",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       console.log("Response:", response.data);
       alert("Job Posted Successfully!");
       setFormData({
@@ -102,21 +106,6 @@ function JobPost() {
             value={formData.company}
             onChange={handleChange}
           />
-          <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Button variant="outlined" component="label" fullWidth>
-                Upload Resume
-                <input type="file" hidden onChange={handleFileChange} />
-              </Button>
-            </Grid>
-            {formData.resume && (
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body2" color="text.secondary">
-                  Uploaded File: {formData.resume.name}
-                </Typography>
-              </Grid>
-            )}
-          </Grid>
           <Button
             variant="contained"
             color="primary"

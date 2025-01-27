@@ -14,11 +14,11 @@ import {
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
 function JobPost() {
-  // State for filters
+  // State declarations
   const [searchQuery, setSearchQuery] = useState("");
   const [companyFilter, setCompanyFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
-  const [jobs, setJobs] = useState([
+  const [jobs] = useState([
     {
       id: 1,
       title: "Software Engineer",
@@ -42,14 +42,18 @@ function JobPost() {
     },
   ]);
 
+  // Filter logic
   const filteredJobs = jobs.filter(
     (job) =>
       (searchQuery === "" ||
         job.title.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (companyFilter === "" || job.company === companyFilter) &&
-      (locationFilter === "" || job.location === locationFilter)
+      (companyFilter === "" ||
+        job.company.toLowerCase().includes(companyFilter.toLowerCase())) &&
+      (locationFilter === "" ||
+        job.location.toLowerCase().includes(locationFilter.toLowerCase()))
   );
 
+  // Clear filters function
   const clearFilters = () => {
     setSearchQuery("");
     setCompanyFilter("");
@@ -72,65 +76,72 @@ function JobPost() {
       </Typography>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         {/* Search Bar */}
-        <Box display="flex" alignItems="center" mb={3}>
+        <Box mb={3}>
           <TextField
             fullWidth
             variant="outlined"
             placeholder="Search Jobs"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            sx={{ marginRight: 2 }}
+            aria-label="Search jobs"
           />
-          <Button variant="contained" size="large" onClick={() => {}}>
-            Submit
-          </Button>
         </Box>
 
         {/* Filters */}
-        <Box display="flex" gap={2} mb={3}>
-          <TextField
-            label="Filter by Company"
-            variant="outlined"
-            fullWidth
-            value={companyFilter}
-            onChange={(e) => setCompanyFilter(e.target.value)}
-          />
-          <TextField
-            label="Filter by Location"
-            variant="outlined"
-            fullWidth
-            value={locationFilter}
-            onChange={(e) => setLocationFilter(e.target.value)}
-          />
-          <Button
-            size="medium"
-            variant="outlined"
-            color="primary"
-            onClick={clearFilters}
-          >
-            Clear Filters
-          </Button>
-        </Box>
+        <Grid container spacing={2} mb={3}>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              label="Filter by Company"
+              fullWidth
+              value={companyFilter}
+              onChange={(e) => setCompanyFilter(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              label="Filter by Location"
+              fullWidth
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={clearFilters}
+              sx={{ height: "56px" }}
+            >
+              Clear Filters
+            </Button>
+          </Grid>
+        </Grid>
 
         {/* Job Cards */}
         <Grid container spacing={3}>
           {filteredJobs.map((job) => (
             <Grid item xs={12} sm={6} md={4} key={job.id}>
-              <Card sx={{ p: "1rem" }}>
+              <Card sx={{ p: 2, height: "100%" }}>
                 <CardContent>
-                  <Typography variant="h5" fontWeight="600">
+                  <Typography variant="h5" gutterBottom>
                     {job.title}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary">
                     {job.company}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {<LocationOnOutlinedIcon fontSize="small" />}
-                    {job.location}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={0.5} mt={1}>
+                    <LocationOnOutlinedIcon fontSize="small" />
+                    <Typography variant="body2">{job.location}</Typography>
+                  </Box>
                   <Typography
                     variant="body2"
-                    sx={{ mt: "10px", color: "text.primary" }}
+                    sx={{
+                      mt: 2,
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
                   >
                     {job.description}
                   </Typography>
