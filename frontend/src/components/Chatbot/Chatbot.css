@@ -1,0 +1,196 @@
+.chatbot-container {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .chat-icon {
+    background-color: #000;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .chat-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .chat-icon.hidden {
+    display: none;
+  }
+  
+  .chatbox {
+    width: 450px; /* Increased width of the chatbot */
+    height: 600px; /* Increased height of the chatbot */
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid #000;
+  }
+  
+  .chatbox-header {
+    background-color: #000;
+    color: white;
+    padding: 15px; /* Increased padding for higher header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chatbox-title {
+    font-size: 18px; /* Increased font size */
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+  }
+  
+  .chatbox-title::before {
+    content: "🤖"; /* Robot emoji */
+    margin-right: 10px; /* Space between the emoji and title */
+    font-size: 22px; /* Adjust size of the emoji */
+  }
+  
+  .chatbox-close {
+    cursor: pointer;
+  }
+  
+  .chatbox-close::after {
+    content: "\00d7"; /* Unicode character for close (x) */
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+  }
+  
+  .chatbox-close:hover::after {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .messages {
+    max-height: 420px; /* Adjusted for increased height */
+    overflow-y: auto;
+    padding: 15px;
+    flex-grow: 1;
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ccc;
+    display: flex;
+    flex-direction: column; /* Stack messages from top to bottom */
+    padding-bottom: 20px; /* Add some padding for better spacing */
+  }
+  
+  .message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .message.bot {
+    background-color: #e6e6e6;
+    color: #000;
+    padding: 10px;
+    border-radius: 5px;
+    justify-content: flex-start; /* Align bot messages to the left */
+  }
+  
+  .message.user {
+    background-color: #333; /* Smoother black for user message */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    align-self: flex-end; /* Align user messages to the right */
+    max-width: 70%; /* Set maximum width to prevent overly long messages */
+    word-wrap: break-word; /* Ensure long words break correctly */
+    text-align: right; /* Ensure the text inside is aligned to the right */
+  }
+  
+  .messages {
+    display: flex;
+    flex-direction: column; /* Keep this as column */
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 15px;
+    flex-grow: 1;
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .message {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .bot-icon,
+  .user-icon {
+    margin-right: 10px;
+  }
+  
+  .emoji {
+    margin-right: 10px;
+    font-size: 18px; /* Adjust emoji size */
+  }
+  
+  .input-area {
+    display: flex;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+  }
+  
+  .input-area input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border 0.3s;
+  }
+  
+  .input-area input:focus {
+    border: 1px solid #000;
+  }
+  
+  .input-area button {
+    padding: 10px 15px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .input-area button:hover {
+    background-color: #333;
+    transform: scale(1.05);
+  }
+  
+  .input-area button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+  

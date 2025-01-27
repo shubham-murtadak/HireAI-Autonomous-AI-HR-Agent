@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
+import Chatbot from "../Chatbot/Chatbot"; // Import Chatbot
+
 function Homepage() {
   return (
     <>
@@ -16,7 +18,7 @@ function Homepage() {
             Hire.ai
           </Typography>
           <Typography variant="h3" color="initial">
-            is an ai company <br /> creating a portal to make <br /> hiring
+            is an AI company <br /> creating a portal to make <br /> hiring
             process seamless
           </Typography>
           <br />
@@ -27,7 +29,7 @@ function Homepage() {
               target="#"
               color="primary"
             >
-              Post Job Openning
+              Post Job Opening
             </Button>
           </Link>
           <Link to="/findjob">
@@ -42,6 +44,10 @@ function Homepage() {
           </div>
         </div>
       </Container>
+      
+      {/* Embed the Chatbot component here */}
+      <Chatbot /> 
+
       <Footer />
     </>
   );

@@ -1,11 +1,14 @@
 import os
 import uvicorn
-from fastapi import FastAPI, Form, UploadFile
+from pydantic import BaseModel
+from fastapi import FastAPI, Form, UploadFile,HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from Utils.chat import chatbot
+# from fastapi.exception_handlers import HTTP
 
 app = FastAPI()
-0
+
 
 # Configure CORS
 app.add_middleware(
@@ -17,9 +20,28 @@ app.add_middleware(
 )
 
 
+# request body model
+class ChatRequest(BaseModel):
+    question: str
+
+
+
 # Create the 'upload' directory if it doesn't exist
 UPLOAD_FOLDER = "upload"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+
+
+# chat endpoint
+@app.post("/chat/")
+async def get_chat_response(request: ChatRequest):
+    try:
+        # Use the session ID to manage chat history
+        response = chatbot(request.question)
+        return {"response": response}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/job-post")
 async def post_job(
