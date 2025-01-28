@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2879c9;
+  background: linear-gradient(rgb(223, 159, 252), white);
   color: white;
   padding: 0.5rem 1rem;
   position: sticky;
