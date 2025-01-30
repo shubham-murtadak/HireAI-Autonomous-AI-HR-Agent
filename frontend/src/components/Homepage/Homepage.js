@@ -4,26 +4,24 @@ import Navbar from "../Navbar/Navbar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Box, Button } from "@mui/material";
-import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import Chatbot from "../Chatbot/Chatbot"; // Import Chatbot
-
 function Homepage() {
   return (
     <>
       <Navbar />
+
       <Container
         maxWidth="lg"
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          flexDirection: { xs: "column", md: "row" }, // Responsive layout
+          flexDirection: { xs: "column", md: "row" },
           gap: 3,
           mt: 4,
         }}
       >
-        {/* Left Section */}
         <Box
           sx={{
             display: "flex",
@@ -31,6 +29,7 @@ function Homepage() {
             justifyContent: "center",
             alignItems: { xs: "center", md: "flex-start" },
             textAlign: { xs: "center", md: "left" },
+            mt: "3.8rem",
           }}
         >
           <Typography variant="h2" color="primary" gutterBottom>

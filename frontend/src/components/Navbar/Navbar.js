@@ -22,6 +22,7 @@ import {
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useMediaQuery } from "@mui/material";
 import "./Navbar.css";
+import Waves from "../../blocks/Backgrounds/Waves";
 
 function Navbar() {
   const [user, setUser] = useState(null);
@@ -66,6 +67,12 @@ function Navbar() {
 
   const renderMenuItems = () => (
     <>
+      <Waves
+        color="#00f"
+        backgroundColor="#fff"
+        waveSpeedX={0.1}
+        style={{ zIndex: "-5" }}
+      />
       {user ? (
         <>
           <MenuItem onClick={handleClose}>

@@ -107,7 +107,7 @@ function Account() {
             )}
           </Box>
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             sx={{ mt: 3 }}
             onClick={handleLogout}

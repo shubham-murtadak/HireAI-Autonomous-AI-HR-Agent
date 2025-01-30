@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(rgb(223, 159, 252), white);
   color: white;
   padding: 0.5rem 1rem;
   position: sticky;
