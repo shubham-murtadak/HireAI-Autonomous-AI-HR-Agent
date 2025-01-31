@@ -1,22 +1,32 @@
 import os
+import json 
 import uvicorn
+from bson import json_util
+from dotenv import load_dotenv
 from pydantic import BaseModel
+from bson.objectid import ObjectId
 from fastapi import FastAPI, Form, UploadFile,HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from Utils.chat import chatbot
-# from fastapi.exception_handlers import HTTP
+from Utils.post_job import post_job_function
+from Utils.apply_job import apply_job_function
+from Utils.database import jobs_collection,applications_collection
 
+load_dotenv()
+
+
+#create fastapi instance
 app = FastAPI()
 
 
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Replace with the frontend's URL
+    allow_origins=["http://localhost:3000"], 
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],  
+    allow_headers=["*"], 
 )
 
 
@@ -25,62 +35,113 @@ class ChatRequest(BaseModel):
     question: str
 
 
-
 # Create the 'upload' directory if it doesn't exist
 UPLOAD_FOLDER = "upload"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-
 # chat endpoint
 @app.post("/chat/")
 async def get_chat_response(request: ChatRequest):
+    """
+    * method: get_chat_response
+    * description: Processes the incoming chat request, uses the chatbot to generate a response based on the provided question, and returns the response in JSON format.
+    * return: JSONResponse
+    *
+    * who             when            version  change
+    * ----------      -----------     -------  ------------------------------
+    * Shubham M       31-JAN-2025     1.0      initial creation
+    *
+    * Parameters
+    *  request: The request object containing the user's question.
+    """
+
     try:
-        # Use the session ID to manage chat history
         response = chatbot(request.question)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+    
+#get jobs endpoint
+@app.get("/getjobs")
+async def get_all_jobs():
+    """
+    * method: get_all_jobs
+    * description: Retrieves a list of all posted jobs from the database and returns them as a JSON response On Frontend.
+    * return: JSONResponse
+    *
+    * who             when            version  change
+    * ----------      -----------     -------  ------------------------------
+    * Shubham M       31-JAN-2025     1.0      initial creation
+    *
+    * Parameters
+    *   None
+    """
 
-
-@app.post("/job-post")
-async def post_job(
-    title: str = Form(...),
-    description: str = Form(...),
-    location: str = Form(...),
-    company: str = Form(...),
-    resume: UploadFile = None
-):
     try:
-        if resume:
-            # Use the original file name for saving
-            resume_filename = resume.filename
-            file_path = os.path.join(UPLOAD_FOLDER, resume_filename)
-
-            # Save the resume file
-            with open(file_path, "wb") as f:
-                f.write(await resume.read())
-        else:
-            resume_filename = "No file uploaded"
-
-        # Debug information
-        print("Job Details:")
-        print(f"Title: {title}, Description: {description}, Location: {location}, Company: {company}")
-        print(f"Resume Saved as: {resume_filename}")
-
-        return JSONResponse(content={
-            "message": "Job posted successfully!",
-            "job_details": {
-                "title": title,
-                "description": description,
-                "location": location,
-                "company": company,
-                "resume_filename": resume_filename
-            }
-        })
+        jobs_cursor = jobs_collection.find({})
+        jobs = list(jobs_cursor)
+        print("jobs :",jobs)
+        # Convert ObjectId to string for JSON serialization
+        jobs = json.loads(json_util.dumps(jobs))
+        return JSONResponse(content=jobs)
     except Exception as e:
-        print("Error:", e)
-        return JSONResponse(content={"error": "Failed to post the job"}, status_code=500)
+        print("Error fetching jobs:", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch jobs")
+    
+#post job endpoint
+@app.post("/job-post")
+async def post_job(title: str = Form(...), description: str = Form(...),location: str = Form(...),company: str = Form(...)):
+    """
+    * method: post_job
+    * description: Handles job posting requests by accepting job title, description, location, and company details. It validates the input and stores the job data in the database.
+    * return: JSONResponse
+    *
+    * who             when            version  change
+    * ----------      -----------     -------  ------------------------------
+    * Shubham M       31-JAN-2025     1.0      initial creation
+    *
+    * Parameters
+    *   title: The title of the job position.
+    *   description: A detailed description of the job responsibilities and requirements.
+    *   location: The location of the job.
+    *   company: The company offering the job.
+    """
+
+    try:
+        return await post_job_function(title, description, location, company)
+    except Exception as e:
+        print("Error posting job:", e)
+
+#apply job endpoint
+@app.post("/apply-job/{job_id}")
+async def apply_job(job_id: str,candidate_name: str = Form(...),email: str = Form(...),resume: UploadFile = None):
+    """
+    * method: apply_job
+    * description: Handles job application requests by accepting job ID, candidate name, email, and an optional resume. It validates the job ID, processes the application, and stores the application data.
+    * return: JSONResponse
+    *
+    * who             when            version  change
+    * ----------      -----------     -------  ------------------------------
+    * Shubham M       31-JAN-2025     1.0      initial creation
+    *
+    * Parameters
+    *   job_id: The unique identifier for the job the candidate is applying to.
+    *   candidate_name: The name of the candidate applying for the job.
+    *   email: The email address of the candidate.
+    *   resume (optional): The resume file of the candidate.
+    """
+
+    # Validate job_id to be a valid ObjectId string
+    if not ObjectId.is_valid(job_id):
+        raise HTTPException(status_code=400, detail="Invalid job ID format")
+
+    try:
+        return await apply_job_function(job_id, candidate_name, email, resume)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to apply for the job")
+
 
 
 

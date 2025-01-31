@@ -6,7 +6,6 @@ import {
   TextField,
   Button,
   Box,
-  Grid,
 } from "@mui/material";
 import axios from "axios";
 
@@ -16,7 +15,6 @@ function JobPost() {
     description: "",
     location: "",
     company: "",
-    resume: null,
   });
 
   const handleChange = (e) => {
@@ -24,19 +22,16 @@ function JobPost() {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    setFormData((prevState) => ({ ...prevState, resume: e.target.files[0] }));
-  };
-
   const handleSubmit = async () => {
     const data = new FormData();
-    data.append("title", formData.title);
-    data.append("description", formData.description);
-    data.append("location", formData.location);
-    data.append("company", formData.company);
-    data.append("resume", formData.resume);
+
+    // Ensure form data fields are appended properly
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
 
     try {
+      console.log("Form Data: ", Object.fromEntries(data.entries())); // Debugging the form content
       const response = await axios.post(
         "http://localhost:8000/job-post",
         data,
@@ -53,7 +48,6 @@ function JobPost() {
         description: "",
         location: "",
         company: "",
-        resume: null,
       });
     } catch (error) {
       console.error("Error posting job:", error);

@@ -15,7 +15,7 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 
 
 #initialize chat history object
-# chat_history= ChatMessageHistory()
+
 
 # Initialize the LLM
 llm = ChatGroq(
@@ -33,7 +33,6 @@ store={}
 #function to manage sessionwise hisotry using inmemorychatmessagehistory
 def get_session_history(session_id: str) -> BaseChatMessageHistory:
     if session_id not in store:
-        # store[session_id] = deque(maxlen=2)
         store[session_id] = InMemoryChatMessageHistory()
 
     return store[session_id]
@@ -43,7 +42,6 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
 def chatbot(question, session_id="abc1234"):
     print(question)
     # print("question received :",question)
-    # print("session id received :",session_id)
     
     # Define the ChatPromptTemplate
     prompt = ChatPromptTemplate.from_messages(

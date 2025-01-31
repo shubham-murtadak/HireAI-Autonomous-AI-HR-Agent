@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import {
   Typography,
@@ -10,37 +10,39 @@ import {
   CardContent,
   CardActions,
   Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import axios from "axios";
 
 function JobPost() {
   // State declarations
   const [searchQuery, setSearchQuery] = useState("");
   const [companyFilter, setCompanyFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
-  const [jobs] = useState([
-    {
-      id: 1,
-      title: "Software Engineer",
-      company: "TechCorp",
-      location: "New York",
-      description: "Develop and maintain web applications.",
-    },
-    {
-      id: 2,
-      title: "Data Analyst",
-      company: "DataSolutions",
-      location: "San Francisco",
-      description: "Analyze data and create reports.",
-    },
-    {
-      id: 3,
-      title: "Product Manager",
-      company: "Innovate Inc.",
-      location: "Seattle",
-      description: "Lead product development and strategy.",
-    },
-  ]);
+  const [jobs, setJobs] = useState([]);
+  const [openApplyDialog, setOpenApplyDialog] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [candidateName, setCandidateName] = useState("");
+  const [email, setEmail] = useState("");
+  const [resume, setResume] = useState(null);
+
+  // Fetch job postings from the backend
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/getjobs");
+        console.log("receieved jobs are :",response.data)
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    fetchJobs();
+  }, []);
 
   // Filter logic
   const filteredJobs = jobs.filter(
@@ -60,6 +62,42 @@ function JobPost() {
     setLocationFilter("");
   };
 
+  // Handle apply button click
+  const handleApplyClick = (job) => {
+    setSelectedJob(job);
+    setOpenApplyDialog(true);
+  };
+
+  // Handle job application
+  // Handle job application
+const handleApply = async () => {
+  const formData = new FormData();
+  formData.append("candidate_name", candidateName);
+  formData.append("email", email);
+  if (resume) formData.append("resume", resume);
+
+  try {
+    // Extract the $oid value from the _id object
+    const jobId = selectedJob._id.$oid; // Correctly access the $oid field
+    console.log("Selected job id is :", jobId);
+    await axios.post(
+      `http://localhost:8000/apply-job/${jobId}`, // Pass job ID as part of the URL
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    alert("Job application submitted successfully!");
+    setOpenApplyDialog(false); // Close dialog after submission
+  } catch (error) {
+    console.error("Error applying for job:", error);
+    alert("Failed to submit job application.");
+  }
+};
+
+  
   return (
     <>
       <Navbar />
@@ -120,7 +158,7 @@ function JobPost() {
         {/* Job Cards */}
         <Grid container spacing={3}>
           {filteredJobs.map((job) => (
-            <Grid item xs={12} sm={6} md={4} key={job.id}>
+            <Grid item xs={12} sm={6} md={4} key={job._id}>
               <Card sx={{ p: 2, height: "100%" }}>
                 <CardContent>
                   <Typography variant="h5" gutterBottom>
@@ -147,7 +185,11 @@ function JobPost() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" variant="contained">
+                  <Button
+                    size="small"
+                    variant="contained"
+                    onClick={() => handleApplyClick(job)}
+                  >
                     Apply Now
                   </Button>
                 </CardActions>
@@ -156,6 +198,40 @@ function JobPost() {
           ))}
         </Grid>
       </Container>
+
+      {/* Job Application Dialog */}
+      <Dialog open={openApplyDialog} onClose={() => setOpenApplyDialog(false)}>
+        <DialogTitle>Apply for Job: {selectedJob?.title}</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Full Name"
+            fullWidth
+            value={candidateName}
+            onChange={(e) => setCandidateName(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Email"
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <input
+            type="file"
+            onChange={(e) => setResume(e.target.files[0])}
+            accept=".pdf,.docx,.doc"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenApplyDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleApply} color="primary">
+            Submit Application
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
