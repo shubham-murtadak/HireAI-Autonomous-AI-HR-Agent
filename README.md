@@ -4,15 +4,15 @@ Your intelligent solution for transforming HR processes through automation and A
 ---
 ## **🔍 Project Overview**
 
-**RecruitAI** is an intelligent HR agent revolutionizing recruitment with **Generative AI** 🤖, **NLP** 🧠, and **Machine Learning** 📊. It automates critical tasks like **job application screening** 📝, **resume parsing** 📄, **candidate ranking** 🏆, and **autonomous email monitoring** 📧 to streamline the hiring process.
+**HireAI** is an intelligent HR agent revolutionizing recruitment with **Generative AI** 🤖, **NLP** 🧠, and **Machine Learning** 📊. It automates critical tasks like **job application screening** 📝, **resume parsing** 📄, **candidate ranking** 🏆, and **autonomous email monitoring** 📧 to streamline the hiring process.
 
-Using **LLMs** and **function calling**, **RecruitAI** can:
+Using **LLMs** and **function calling**, **HiretAI** can:
 - **Monitor emails** automatically, classifying them based on **job roles** 🧑‍💼 and **other queries** 💬.
 - **Parse attachments resumes** to extract essential details like **skills** 🛠️, **experience** 🏢, and **education** 🎓.  
 - **Match candidates** to job descriptions for the best fit 📈.  
 - **Conduct initial interviews** using **AI-powered conversations** 💬, **analyze responses** 📊, and **rank candidates** dynamically.  
 
-Say goodbye to tedious processes—**RecruitAI** ensures **faster**, **unbiased**, and **smarter** hiring decisions 🌟🚀.
+Say goodbye to tedious processes—**HireAI** ensures **faster**, **unbiased**, and **smarter** hiring decisions 🌟🚀.
 ---
 
 ## **🌟 Key Features**  
@@ -69,7 +69,13 @@ Say goodbye to tedious processes—**RecruitAI** ensures **faster**, **unbiased*
 
 ---
 
-### **✨ Empowering Smarter Hiring with RecruitAI!**  
+### **✨ Empowering Smarter Hiring with HireAI!**  
 🌟 Revolutionize your HR processes today! 🌟  
 
+📸 Screenshots of RecruitAI in Action
+
+![Screenshot](Screenshots/a.png)
+![Screenshot](Screenshots/b.png)
+![Screenshot](Screenshots/c.png)
+![Screenshot](Screenshots/d.png)
 ---
