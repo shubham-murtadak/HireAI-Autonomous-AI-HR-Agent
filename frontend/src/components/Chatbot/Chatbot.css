@@ -25,8 +25,8 @@
 }
 
 .chatbox {
-  width: 450px; /* Increased width of the chatbot */
-  height: 600px; /* Increased height of the chatbot */
+  width: 25rem; /* Increased width of the chatbot */
+  height: 35rem; /* Increased height of the chatbot */
   background-color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   position: absolute;

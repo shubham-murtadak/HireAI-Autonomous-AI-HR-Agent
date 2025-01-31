@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import { Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import Chatbot from "../Chatbot/Chatbot"; // Import Chatbot
+import BlurText from "../../blocks/TextAnimations/BlurText/BlurText";
+
 function Homepage() {
   return (
     <>
@@ -33,7 +35,13 @@ function Homepage() {
           }}
         >
           <Typography variant="h2" color="primary" gutterBottom>
-            Hire.ai
+            <BlurText
+              text="Hire.ai"
+              delay={150}
+              animateBy="words"
+              direction="top"
+              className="text-2xl mb-8"
+            />
           </Typography>
           <Typography variant="h4" color="textPrimary" gutterBottom>
             is an AI company <br /> creating a portal to make <br /> hiring
@@ -73,7 +81,6 @@ function Homepage() {
         </Box>
       </Container>
 
-      {/* Embed the Chatbot component */}
       <Chatbot />
     </>
   );

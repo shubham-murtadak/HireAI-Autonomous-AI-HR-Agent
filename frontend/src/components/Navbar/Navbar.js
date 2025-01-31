@@ -7,7 +7,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Avatar,
-  Typography,
   Popper,
   Paper,
   ClickAwayListener,

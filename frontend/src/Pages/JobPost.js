@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Grid,
-} from "@mui/material";
+import { Container, Typography, TextField, Button, Box } from "@mui/material";
 import axios from "axios";
 
 function JobPost() {
@@ -22,10 +15,6 @@ function JobPost() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleFileChange = (e) => {
-    setFormData((prevState) => ({ ...prevState, resume: e.target.files[0] }));
   };
 
   const handleSubmit = async () => {
