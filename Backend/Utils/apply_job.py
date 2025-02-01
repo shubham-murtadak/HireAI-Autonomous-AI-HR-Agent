@@ -19,7 +19,7 @@ class CustomJSONEncoder(JSONEncoder):
         return super().default(o)
 
 
-async def apply_job_function(job_id: str, candidate_name: str, email: str, resume: UploadFile = None):
+async def apply_job_function(job_id: str, candidate_name: str, email: str,resume: UploadFile = None):
     """
     * method: apply_job_function
     * description: Handles job application submissions, validates job details, saves the resume if provided, and stores application data in the database.
@@ -39,14 +39,19 @@ async def apply_job_function(job_id: str, candidate_name: str, email: str, resum
     try:
         print("inside apply job function ::")
         
+        # Fetch the job details from the database
         job = jobs_collection.find_one({"_id": ObjectId(job_id)})
         if not job:
             raise HTTPException(status_code=404, detail="Job not found")
 
         file_path = None
+
+        print("Resume is :",resume)
+        # If resume is provided, save the file
         if resume:
             resume_filename = resume.filename
             file_path = os.path.join(UPLOAD_FOLDER, resume_filename)
+            print("File path is :",file_path)
             with open(file_path, "wb") as f:
                 f.write(await resume.read())
 
@@ -59,21 +64,25 @@ async def apply_job_function(job_id: str, candidate_name: str, email: str, resum
             "job_id": job_id, 
             "candidate_name": candidate_name,
             "email": email,
-            "resume_path": file_path
+            "resume_path": file_path  # Just save the path or filename in DB
         }
 
         # Save application to database
         applications_collection.insert_one(application_data)
 
-        return JSONResponse(content=CustomJSONEncoder().encode({
+        return JSONResponse(content={
             "message": "Application submitted successfully!",
-            "application_details": application_data
-        }))
+            "application_details": {
+                "job_id": job_id,
+                "candidate_name": candidate_name,
+                "email": email,
+                "resume_path": file_path  # Send the resume path, not the file object itself
+            }
+        })
 
     except Exception as e:
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Failed to apply for the job")
-
 
 
 if __name__=='__main__':
