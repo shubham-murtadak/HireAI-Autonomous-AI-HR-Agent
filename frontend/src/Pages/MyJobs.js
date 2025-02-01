@@ -8,7 +8,9 @@ function MyJobs() {
     <>
       <Navbar />
       <Container maxWidth="lg">
-        <Typography variant="h5">My Jobs</Typography>
+        <Typography variant="h4" sx={{ textAlign: "center", mt: "2rem" }}>
+          My Jobs
+        </Typography>
       </Container>
     </>
   );
