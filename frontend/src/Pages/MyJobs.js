@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import { Card, CardContent, CardActions, Button, Grid } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  CardActions,
+  CardHeader,
+  Button,
+  Grid,
+  Divider,
+  Box,
+} from "@mui/material";
 import { getAuth } from "firebase/auth"; // Firebase Auth import
 import axios from "axios";
 
@@ -40,59 +49,101 @@ function MyJobs() {
       <Container maxWidth="lg">
         <Typography
           variant="h4"
-          sx={{ textAlign: "center", mt: "2rem", mb: "2rem" }}
+          sx={{
+            textAlign: "center",
+            fontWeight: "bold",
+            mt: "2rem",
+            mb: "2rem",
+          }}
         >
           My Jobs
         </Typography>
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {jobs.length > 0 ? (
             jobs.map((job) => (
-              <Grid item xs={12} sm={6} md={4} key={job._id.toString()}>
+              <Grid item xs={12} sm={6} md={4} key={job._id?.toString()}>
                 <Card
                   sx={{
-                    minHeight: 200,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    bgcolor: "#fff",
-                    border: 1,
+                    boxShadow: 3,
+                    borderRadius: "10px",
+                    transition: "0.3s",
+                    "&:hover": {
+                      boxShadow: 6,
+                      transform: "translateY(-5px)",
+                    },
                   }}
                 >
+                  {/* Card Header with Job Title */}
+                  <CardHeader
+                    title={job.title}
+                    titleTypographyProps={{
+                      variant: "h6",
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                    }} // Reduce font size
+                    sx={{
+                      bgcolor: "#f5f5f5",
+                      py: 1, // Reduce vertical padding
+                      px: 2, // Adjust horizontal padding if needed
+                      minHeight: "50px", // Set a smaller min height
+                    }}
+                  />
+
+                  {/* Gray Divider */}
+                  <Divider sx={{ bgcolor: "#d1d1d1" }} />
+
                   <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      {job.title}
-                    </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
                       {job.company} - {job.location}
                     </Typography>
-                    <Typography variant="body2" sx={{ mt: 1 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        mt: 2,
+                        color: "text.secondary",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
                       {job.description}
                     </Typography>
                   </CardContent>
-                  <CardActions>
+
+                  {/* View Candidates Button */}
+                  <CardActions sx={{ p: 2, justifyContent: "center" }}>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="primary"
-                      size="small"
-                      sx={{ mb: "1rem", ml: "0.5rem" }}
+                      fullWidth
+                      sx={{
+                        textTransform: "none",
+                        fontWeight: "bold",
+                        bgcolor: "text.primary",
+                        "&:hover": { bgcolor: "text.secondary" },
+                      }}
                       onClick={() => {
                         const jobId = job._id?.$oid || job._id?.toString(); // Handle both ObjectId and string
-                        console.log('job._id:', jobId);  // Log the jobId
-                        navigate(`/appliedcandidates/${jobId}`);  // Navigate with the jobId
+                        console.log("job._id:", jobId);
+                        navigate(`/appliedcandidates/${jobId}`);
                       }}
                     >
                       View Candidates
                     </Button>
-
-
                   </CardActions>
                 </Card>
               </Grid>
             ))
           ) : (
-            <Typography sx={{ mt: "2rem", mx: "auto" }}>
-              No jobs found for this HR.
-            </Typography>
+            <Box textAlign="center" sx={{ mt: 4, mx: "auto" }}>
+              <Typography variant="h6" color="textSecondary">
+                No jobs found for this HR.
+              </Typography>
+            </Box>
           )}
         </Grid>
       </Container>

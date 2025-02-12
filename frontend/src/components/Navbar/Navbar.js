@@ -80,11 +80,6 @@ function Navbar() {
             </Link>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Link to="/appliedcandidates" className="nav-link">
-              <Button startIcon={<WorkIcon />}>Applied Candidates</Button>
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
             <Link to="/myjobs" className="nav-link">
               <Button startIcon={<WorkIcon />}>My Jobs</Button>
             </Link>
