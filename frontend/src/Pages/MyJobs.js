@@ -45,43 +45,55 @@ function MyJobs() {
           My Jobs
         </Typography>
         <Grid container spacing={3}>
-          {jobs.map((job) => (
-            <Grid item xs={12} sm={6} md={4} key={job.id}>
-              <Card
-                sx={{
-                  minHeight: 200,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  bgcolor: "#fff",
-                  border: 1,
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    {job.title}
-                  </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    {job.company} - {job.location}
-                  </Typography>
-                  <Typography variant="body2" sx={{ mt: 1 }}>
-                    {job.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    size="small"
-                    sx={{ mb: "1rem", ml: "0.5rem" }}
-                    onClick={() => navigate(`/appliedjobs`)}
-                  >
-                    View Candidates
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+          {jobs.length > 0 ? (
+            jobs.map((job) => (
+              <Grid item xs={12} sm={6} md={4} key={job._id.toString()}>
+                <Card
+                  sx={{
+                    minHeight: 200,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    bgcolor: "#fff",
+                    border: 1,
+                  }}
+                >
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      {job.title}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary">
+                      {job.company} - {job.location}
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                      {job.description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      sx={{ mb: "1rem", ml: "0.5rem" }}
+                      onClick={() => {
+                        const jobId = job._id?.$oid || job._id?.toString(); // Handle both ObjectId and string
+                        console.log('job._id:', jobId);  // Log the jobId
+                        navigate(`/appliedcandidates/${jobId}`);  // Navigate with the jobId
+                      }}
+                    >
+                      View Candidates
+                    </Button>
+
+
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography sx={{ mt: "2rem", mx: "auto" }}>
+              No jobs found for this HR.
+            </Typography>
+          )}
         </Grid>
       </Container>
     </>

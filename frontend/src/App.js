@@ -25,7 +25,11 @@ function App() {
             <Route path="/jobpost" element={<JobPost />} />
             <Route path="/findjob" element={<FindJob />} />
             <Route path="/account" element={<Account />} />
-            <Route path="/appliedcandidates/:jobId" element={<AppliedCandidates />} />
+            <Route
+              path="/appliedcandidates/:jobId"
+              element={<AppliedCandidates />}
+            />
+            <Route path="/appliedcandidates" element={<AppliedCandidates />} />
             <Route path="/myjobs" element={<MyJobs />} />
             <Route path="/chatbot" element={<Chatbot />} />
           </Routes>
