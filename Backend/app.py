@@ -90,9 +90,73 @@ async def get_all_jobs():
         print("Error fetching jobs:", e)
         raise HTTPException(status_code=500, detail="Failed to fetch jobs")
     
+# Endpoint to get jobs by HR ID
+@app.get("/getjobsbyhr/{hr_id}")
+async def get_jobs_by_hr(hr_id: str):
+    """
+    * method: get_jobs_by_hr
+    * description: Fetches jobs posted by a specific HR based on hr_id.
+    * return: JSONResponse
+    *  who             when            version  change
+    * ----------      -----------     -------  ------------------------------
+    * Shubham M       1-Feb-2025       1.0      initial creation
+    *
+    * Parameters:
+    *  hr_id: str
+    """
+    try:
+        # Fetch jobs by hr_id
+        jobs_cursor = jobs_collection.find({"hr_id": hr_id})
+        jobs = list(jobs_cursor)
+        if not jobs:
+            return JSONResponse(content={"message": "No jobs found for this HR"}, status_code=404)
+        
+        print("jobs found by hr are :",jobs)
+        # Convert ObjectId to string for JSON serialization
+        jobs = json.loads(json_util.dumps(jobs))
+        return JSONResponse(content=jobs)
+    
+    except Exception as e:
+        print("Error fetching jobs by HR:", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch jobs by HR")
+    
+
+# Endpoint to get jobs by HR ID
+@app.get("/getcandidatesbyjob/{job_id}")
+async def get_candidates_by_jobid(job_id: str):
+    """
+    * method: get_candidates_by_jobid
+    * description: Fetches candidates applied to a specific job id .
+    * return: JSONResponse
+    *  who             when            version  change
+    * ----------      -----------     -------  ------------------------------
+    * Shubham M       1-Feb-2025       1.0      initial creation
+    *
+    * Parameters:
+    *  job_id: str
+    """
+    try:
+        print("Inside candidate search function !!!")
+        # Fetch jobs by hr_id
+        candidates_cursor = applications_collection.find({"job_id": job_id})
+        candidates = list(candidates_cursor)
+        print("candidates are :",candidates)
+        if not candidates:
+            return JSONResponse(content={"message": "No candidates found for this job"}, status_code=404)
+        
+        print("candidates found by job are :",candidates)
+        # Convert ObjectId to string for JSON serialization
+        candidates = json.loads(json_util.dumps(candidates))
+        return JSONResponse(content=candidates)
+    
+    except Exception as e:
+        print("Error fetching candidates by job:", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch candidates by job")
+    
+    
 #post job endpoint
-@app.post("/job-post")
-async def post_job(title: str = Form(...), description: str = Form(...),location: str = Form(...),company: str = Form(...)):
+@app.post("/job-post/{hr_id}")
+async def post_job(hr_id:str,title: str = Form(...), description: str = Form(...),location: str = Form(...),company: str = Form(...)):
     """
     * method: post_job
     * description: Handles job posting requests by accepting job title, description, location, and company details. It validates the input and stores the job data in the database.
@@ -110,9 +174,10 @@ async def post_job(title: str = Form(...), description: str = Form(...),location
     """
 
     try:
-        return await post_job_function(title, description, location, company)
+        return await post_job_function(hr_id,title, description, location, company)
     except Exception as e:
         print("Error posting job:", e)
+
 
 #apply job endpoint
 @app.post("/apply-job/{job_id}")
@@ -132,13 +197,13 @@ async def apply_job(job_id: str,candidate_name: str = Form(...),email: str = For
     *   email: The email address of the candidate.
     *   resume (optional): The resume file of the candidate.
     """
-
+    print(job_id,candidate_name)
     # Validate job_id to be a valid ObjectId string
     if not ObjectId.is_valid(job_id):
         raise HTTPException(status_code=400, detail="Invalid job ID format")
 
     try:
-        return await apply_job_function(job_id, candidate_name, email, resume)
+        return await apply_job_function(job_id, candidate_name, email,resume)
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to apply for the job")
 

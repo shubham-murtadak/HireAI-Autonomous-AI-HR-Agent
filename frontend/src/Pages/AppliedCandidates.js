@@ -1,54 +1,49 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Button,
-} from "@mui/material";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import React, { useState } from "react";
+import axios from "axios";
 
 const columns = [
   { id: "date", label: "Date", minWidth: 150 },
   { id: "name", label: "Name", minWidth: 150 },
+  { id: "email", label: "Email", minWidth: 200 },
+  { id: "experience", label: "Experience", minWidth: 100, align: "center" },
   { id: "rank", label: "Rank", minWidth: 100, align: "center" },
   { id: "resume", label: "Resume (PDF)", minWidth: 200, align: "center" },
 ];
 
-const initialRows = [
-  {
-    date: "2025-02-01",
-    name: "Rahul Sharma",
-    rank: 1,
-    resume: "https://example.com/resume1.pdf",
-  },
-  {
-    date: "2025-02-02",
-    name: "Amit Verma",
-    rank: 2,
-    resume: "https://example.com/resume2.pdf",
-  },
-  {
-    date: "2025-02-03",
-    name: "Priya Singh",
-    rank: 3,
-    resume: "https://example.com/resume3.pdf",
-  },
-  { date: "2025-02-04", name: "Neha Patil", rank: 4, resume: null }, // No resume uploaded
-];
-
 function AppliedCandidates() {
-  const [rows] = useState(initialRows);
+  const { jobId } = useParams(); // Get jobId from route
+  const [candidates, setCandidates] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useEffect(() => {
+    const fetchCandidates = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/getcandidatesbyjob/${jobId}`);
+        const data = response.data;
+        
+        // Add dummy data for missing fields
+        const candidatesWithDummyData = data.map((candidate) => ({
+          ...candidate,
+          experience: "5 years", // Dummy experience
+          rank: Math.floor(Math.random() * 100) + 1, // Random rank between 1 and 100
+          date: "2025-02-01", // Dummy date, assuming it's when the candidate applied
+        }));
+
+        setCandidates(candidatesWithDummyData);
+      } catch (error) {
+        console.error("Error fetching candidates:", error);
+      }
+    };
+
+    fetchCandidates();
+  }, [jobId]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -64,7 +59,7 @@ function AppliedCandidates() {
       <Navbar />
       <Container maxWidth="lg">
         <Typography variant="h3" sx={{ mt: "1rem", textAlign: "center" }}>
-          Candidates
+          Candidates for Job ID: {jobId}
         </Typography>
         <Box sx={{ mt: 3 }}>
           <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
@@ -84,19 +79,21 @@ function AppliedCandidates() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
+                  {candidates
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => (
-                      <TableRow hover key={index}>
-                        <TableCell>{row.date}</TableCell>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell align="center">{row.rank}</TableCell>
+                    .map((candidate, index) => (
+                      <TableRow hover key={candidate._id}>
+                        <TableCell>{candidate.date}</TableCell>
+                        <TableCell>{candidate.candidate_name}</TableCell>
+                        <TableCell>{candidate.email}</TableCell>
+                        <TableCell align="center">{candidate.experience}</TableCell>
+                        <TableCell align="center">{candidate.rank}</TableCell>
                         <TableCell align="center">
-                          {row.resume ? (
+                          {candidate.resume_path ? (
                             <Button
                               variant="outlined"
                               startIcon={<VisibilityIcon />}
-                              onClick={() => window.open(row.resume, "_blank")}
+                              onClick={() => window.open(`http://localhost:8000/${candidate.resume_path}`, "_blank")}
                             >
                               View Resume
                             </Button>
@@ -112,7 +109,7 @@ function AppliedCandidates() {
             <TablePagination
               rowsPerPageOptions={[1, 3, 5]}
               component="div"
-              count={rows.length}
+              count={candidates.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

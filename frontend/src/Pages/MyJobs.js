@@ -1,39 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Card, CardContent, CardActions, Button, Grid } from "@mui/material";
-
-const jobs = [
-  {
-    id: 1,
-    title: "Frontend Developer",
-    company: "Tech Solutions Ltd.",
-    location: "Mumbai, India",
-    description:
-      "Looking for a skilled React.js developer with experience in Material-UI.",
-  },
-  {
-    id: 2,
-    title: "Backend Developer",
-    company: "InnovateX",
-    location: "Bangalore, India",
-    description:
-      "Seeking a Node.js developer with expertise in REST APIs and Firebase.",
-  },
-  {
-    id: 3,
-    title: "Data Analyst",
-    company: "AnalyticsPro",
-    location: "Remote",
-    description:
-      "Hiring a Data Analyst skilled in SQL, Python, and Business Intelligence tools.",
-  },
-];
+import { getAuth } from "firebase/auth"; // Firebase Auth import
+import axios from "axios";
 
 function MyJobs() {
+  const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const auth = getAuth();
+        const hrId = auth.currentUser?.uid; // Get HR ID from Firebase
+        if (!hrId) {
+          console.error("HR ID not found. Please ensure you are logged in.");
+          return;
+        }
+
+        // Fetch jobs by HR ID from your backend
+        const response = await axios.get(
+          `http://localhost:8000/getjobsbyhr/${hrId}`
+        );
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs for HR:", error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   return (
     <>
@@ -54,11 +53,12 @@ function MyJobs() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
+                  bgcolor: "#fff",
                   border: 1,
                 }}
               >
                 <CardContent>
-                  <Typography variant="h6" gutterBottom fontWeight={600}>
+                  <Typography variant="h6" gutterBottom>
                     {job.title}
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">

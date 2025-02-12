@@ -19,6 +19,7 @@
     "react-markdown": "^9.0.3",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
+    "react-spring": "^9.7.5",
     "three": "^0.167.1"
   },
   "scripts": {

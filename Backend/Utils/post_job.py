@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from Utils.database import jobs_collection
 
 
-async def post_job_function(title: str, description: str, location: str, company: str):
+async def post_job_function(hr_id:str,title: str, description: str, location: str, company: str):
     """
     * method: post_job_function
     * description: Handles job posting by accepting job details, saving them to the database, and returning the posted job information along with a generated job ID.
@@ -24,6 +24,7 @@ async def post_job_function(title: str, description: str, location: str, company
     try:
         print("inside post job function !!!")
         job_data = {
+            "hr_id":hr_id,
             "title": title,
             "description": description,
             "location": location,

@@ -6,9 +6,9 @@ import {
   TextField,
   Button,
   Box,
-  Grid,
 } from "@mui/material";
 import axios from "axios";
+import { getAuth } from "firebase/auth"; // Firebase Auth import
 
 function JobPost() {
   const [formData, setFormData] = useState({
@@ -26,15 +26,25 @@ function JobPost() {
   const handleSubmit = async () => {
     const data = new FormData();
 
-    // Ensure form data fields are appended properly
     for (const key in formData) {
       data.append(key, formData[key]);
     }
 
     try {
-      console.log("Form Data: ", Object.fromEntries(data.entries())); // Debugging the form content
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        alert("User not authenticated!");
+        return;
+      }
+
+      const hrId = user.uid; // Firebase Unique Auth ID
+
+      console.log("Submitting Job Post for HR:", hrId);
+
       const response = await axios.post(
-        "http://localhost:8000/job-post",
+        `http://localhost:8000/job-post/${hrId}`,
         data,
         {
           headers: {
@@ -42,7 +52,6 @@ function JobPost() {
           },
         }
       );
-      console.log("Response:", response.data);
       alert("Job Posted Successfully!");
       setFormData({
         title: "",
@@ -63,10 +72,7 @@ function JobPost() {
         <Typography variant="h4" gutterBottom>
           Post a Job
         </Typography>
-        <Box
-          component="form"
-          sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}
-        >
+        <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
           <TextField
             label="Job Title"
             variant="outlined"
