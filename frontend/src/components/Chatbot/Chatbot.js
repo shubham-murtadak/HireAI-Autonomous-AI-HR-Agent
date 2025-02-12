@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { Typography } from "@mui/material";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
+import { LuBotMessageSquare } from "react-icons/lu";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
@@ -84,7 +85,7 @@ function Chatbot() {
         className={`chat-icon ${chatVisible ? "hidden" : ""}`}
         onClick={toggleChat}
       >
-        <FaCommentDots size={30} />
+        <LuBotMessageSquare color="black" size={20} />
       </div>
 
       {chatVisible && (

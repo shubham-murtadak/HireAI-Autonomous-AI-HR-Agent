@@ -54,12 +54,11 @@ function MyJobs() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  bgcolor: "#fff",
                   border: 1,
                 }}
               >
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" gutterBottom fontWeight={600}>
                     {job.title}
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">

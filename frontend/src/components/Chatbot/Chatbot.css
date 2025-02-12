@@ -1,16 +1,15 @@
 .chatbot-container {
   position: fixed;
-  bottom: 0;
+  bottom: 7px;
   right: 20px;
   font-family: "Arial", sans-serif;
 }
 
 .chat-icon {
-  background-color: #000;
+  background-color: #fff;
   padding: 15px;
   border-radius: 50%;
   cursor: pointer;
-  color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
 }
