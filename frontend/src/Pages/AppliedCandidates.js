@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/Navbar/Navbar";
+// import Navbar from "../components/Navbar/Navbar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
+import Navbar from "../components/Navbar/Navbar";
 
 const columns = [
   { id: "date", label: "Date", minWidth: 150 },

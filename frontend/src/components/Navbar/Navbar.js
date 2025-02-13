@@ -114,7 +114,7 @@ function Navbar() {
     <div className="navbar">
       <div className="navbar-logo">
         <Link to="/" className="logo-link">
-          <img src="./Assets/whiteBgColor.png" height={60} alt="Not found" />
+          <img src="/Assets/whiteBgColor.png" height={60} alt="Not found" />
         </Link>
       </div>
       {!isMobile ? (

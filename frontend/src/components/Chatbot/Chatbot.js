@@ -92,7 +92,7 @@ function Chatbot() {
         <div className="chatbox">
           <div className="chatbox-header">
             <div className="chatbox-title">
-              <Typography>RecruitAI </Typography>
+              <Typography>HireAI</Typography>
             </div>
             <div className="chatbox-close" onClick={toggleChat}></div>
           </div>
