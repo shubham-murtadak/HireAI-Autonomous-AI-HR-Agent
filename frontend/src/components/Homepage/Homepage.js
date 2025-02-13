@@ -43,10 +43,18 @@ function Homepage() {
               className="text-2xl mb-8"
             />
           </Typography>
-          <Typography variant="h4" color="textPrimary" gutterBottom>
+          {/* <Typography variant="h4" color="textPrimary" gutterBottom>
             is an AI company <br /> creating a portal to make <br /> hiring
             process seamless
+          </Typography> */}
+          <Typography variant="h3" color="primary" fontWeight="bold" gutterBottom>
+            ⚡ Revolutionizing Hiring with Autonomous AI 🚀 <br />
+            Smarter, Faster, Unstoppable.
           </Typography>
+          <Typography variant="h5" color="textSecondary">
+            The future of recruitment is here—AI-driven, fully automated, and built for the next era of hiring.
+          </Typography>
+
           <Box sx={{ mt: 3 }}>
             <Link
               to="/jobpost"
