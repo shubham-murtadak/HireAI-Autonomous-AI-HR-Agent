@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Chatbot.css";
 import axios from "axios";
-import { FaCommentDots, FaPaperPlane } from "react-icons/fa";
+import { FaPaperPlane } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
 import { Typography } from "@mui/material";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";

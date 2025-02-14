@@ -47,12 +47,18 @@ function Homepage() {
             is an AI company <br /> creating a portal to make <br /> hiring
             process seamless
           </Typography> */}
-          <Typography variant="h3" color="primary" fontWeight="bold" gutterBottom>
+          <Typography
+            variant="h3"
+            color="primary"
+            fontWeight="bold"
+            gutterBottom
+          >
             ⚡ Revolutionizing Hiring with Autonomous AI 🚀 <br />
             Smarter, Faster, Unstoppable.
           </Typography>
           <Typography variant="h5" color="textSecondary">
-            The future of recruitment is here—AI-driven, fully automated, and built for the next era of hiring.
+            The future of recruitment is here—AI-driven, fully automated, and
+            built for the next era of hiring.
           </Typography>
 
           <Box sx={{ mt: 3 }}>
@@ -60,12 +66,12 @@ function Homepage() {
               to="/jobpost"
               style={{ textDecoration: "none", marginRight: "1rem" }}
             >
-              <Button variant="outlined" color="primary">
+              <Button variant="contained" color="primary">
                 Post Job Opening
               </Button>
             </Link>
             <Link to="/findjob" style={{ textDecoration: "none" }}>
-              <Button variant="outlined" color="primary">
+              <Button variant="contained" color="primary">
                 Find Job
               </Button>
             </Link>
@@ -78,6 +84,7 @@ function Homepage() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            width: 600,
           }}
         >
           <img
