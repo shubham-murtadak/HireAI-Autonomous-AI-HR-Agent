@@ -72,7 +72,7 @@ Say goodbye to tedious processes—**HireAI** ensures **faster**, **unbiased**, 
 ### **✨ Empowering Smarter Hiring with HireAI!**  
 🌟 Revolutionize your HR processes today! 🌟  
 
-📸 Screenshots of RecruitAI in Action
+📸 Screenshots of HireAI in Action
 
 ![Screenshot](Screenshots/a.png)
 ![Screenshot](Screenshots/b.png)
