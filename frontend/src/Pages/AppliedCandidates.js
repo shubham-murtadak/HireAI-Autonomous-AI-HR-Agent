@@ -29,22 +29,24 @@ function AppliedCandidates() {
         const response = await axios.get(`http://localhost:8000/getcandidatesbyjob/${jobId}`);
         const data = response.data;
         
-        // Add dummy data for missing fields
-        const candidatesWithDummyData = data.map((candidate) => ({
+        // Add dummy data with incremental ranking
+        const candidatesWithRanking = data.map((candidate, index) => ({
           ...candidate,
           experience: "5 years", // Dummy experience
-          rank: Math.floor(Math.random() * 100) + 1, // Random rank between 1 and 100
-          date: "2025-02-01", // Dummy date, assuming it's when the candidate applied
+          rank: index + 1, // Assign rank as 1, 2, 3, ...
+          date: "2025-02-01", // Dummy date
         }));
 
-        setCandidates(candidatesWithDummyData);
+        setCandidates(candidatesWithRanking);
       } catch (error) {
         console.error("Error fetching candidates:", error);
       }
     };
 
     fetchCandidates();
-  }, [jobId]);
+}, [jobId]);
+
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
