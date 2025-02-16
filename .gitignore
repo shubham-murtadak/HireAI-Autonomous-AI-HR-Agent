@@ -4,7 +4,6 @@ cache/
 Superceded/
 templates/
 Hireaienv/
-.env
 Data/
 hireenv/
 __pycache__/

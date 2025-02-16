@@ -1,21 +1,17 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage"; // Import Firebase Storage SDK
+import { getStorage } from "firebase/storage";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAjjb_1AaIrM8PcTKBQrPfk0OQ4VA7BoMQ",
-  authDomain: "hireai-ccd32.firebaseapp.com",
-  projectId: "hireai-ccd32",
-  storageBucket: "hireai-ccd32.firebasestorage.app",
-  messagingSenderId: "67955948338",
-  appId: "1:67955948338:web:e09d5b5d91fc89ef34f52b",
-  measurementId: "G-D2FN6VRV5P"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
@@ -23,8 +19,6 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 // Initialize Firebase Storage
-export const storage = getStorage(app); // Export storage instance
+export const storage = getStorage(app);
 
-// Log Firebase initialization confirmation
 console.log("Firebase initialized successfully!");
-
