@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
-import { Typography, Container, Button, TextField, Grid, Card, CardContent, CardActions, Box, Dialog, DialogActions, DialogContent, DialogTitle, Slide, Stack, IconButton, } from "@mui/material";
+import { Typography, Container, Button, TextField, Grid, Card, Chip, CardContent, CardActions, Box, Dialog, DialogActions, DialogContent, DialogTitle, Slide, Stack, IconButton, } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import axios from "axios";
 import { auth, storage } from "../Firebase"; // Import Firebase config
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { onAuthStateChanged } from "firebase/auth";
-
-// import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
-// import { storage } from "../../firebase/firebase.config"; // Firebase storage instance
-// import { auth } from "../../firebase/firebase.config";
 import { toast } from "react-toastify"; // Optional for notifications
-
-
 
 // Transition component for a smooth slide-up effect
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -80,7 +73,7 @@ function JobPost() {
     if (!resume) {
       return toast.error("Please upload a resume.");
     }
-  
+
     // Get the logged-in user ID from Firebase Auth
     const user = auth.currentUser;
     if (!user) {
@@ -88,14 +81,14 @@ function JobPost() {
     }
     const userId = user.uid; // Firebase user ID
     const jobId = selectedJob._id.$oid; // Ensure this ID is present
-  
+
     // File Path in Firebase Storage
     const filePath = `jobApplications/${jobId}/${userId}_${resume.name}`;
     const fileRef = ref(storage, filePath);
-    
+
     // Upload the resume to Firebase Storage
     const uploadTask = uploadBytesResumable(fileRef, resume);
-  
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -111,7 +104,7 @@ function JobPost() {
         const fileURL = await getDownloadURL(fileRef);
         console.log("Resume uploaded at:", fileURL);
         toast.success("Resume uploaded successfully!");
-  
+
         // Send job application details to the backend
         const formData = new FormData();
         formData.append("candidate_name", candidateName);
@@ -122,7 +115,7 @@ function JobPost() {
         formData.append("notice_period", noticePeriod);
         formData.append("expected_salary", expectedSalary);
         formData.append("resume_url", fileURL); // Store resume URL instead of file
-  
+
         try {
           await axios.post(`http://localhost:8000/apply-job/${jobId}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -136,7 +129,7 @@ function JobPost() {
       }
     );
   };
-  
+
 
   return (
     <>
@@ -227,9 +220,17 @@ function JobPost() {
                     <Typography variant="body2">{job.location}</Typography>
                   </Box>
 
-                  <Typography variant="body2" fontWeight="bold">
-                    Skills: {job.skills?.join(", ")}
-                  </Typography>
+                  {/* Updated Skills Section with Chip Components */}
+                  <Box display="flex" flexWrap="wrap" gap={0.5} mb={1}>
+                    {job.skills?.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        label={skill}
+                        variant="outlined"
+                        sx={{ fontSize: "12px" }}
+                      />
+                    ))}
+                  </Box>
 
                   <Typography variant="body2">
                     Experience: {job.experience} years

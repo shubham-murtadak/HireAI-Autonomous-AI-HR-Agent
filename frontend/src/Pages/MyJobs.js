@@ -12,6 +12,7 @@ import {
   Grid,
   Divider,
   Box,
+  Chip,
 } from "@mui/material";
 import { getAuth } from "firebase/auth"; // Firebase Auth import
 import axios from "axios";
@@ -25,7 +26,7 @@ function MyJobs() {
       try {
         const auth = getAuth();
         const hrId = auth.currentUser?.uid; // Get HR ID from Firebase
-        console.log("Hr id is :", hrId)
+        console.log("Hr id is :", hrId);
         if (!hrId) {
           console.error("HR ID not found. Please ensure you are logged in.");
           return;
@@ -84,21 +85,26 @@ function MyJobs() {
                       variant: "h6",
                       fontWeight: "bold",
                       fontSize: "1rem",
-                    }} // Reduce font size
+                    }}
                     sx={{
                       bgcolor: "#f5f5f5",
-                      py: 1, // Reduce vertical padding
-                      px: 2, // Adjust horizontal padding if needed
-                      minHeight: "50px", // Set a smaller min height
+                      py: 1,
+                      px: 2,
+                      minHeight: "50px",
                     }}
                   />
 
-                  {/* Gray Divider */}
                   <Divider sx={{ bgcolor: "#d1d1d1" }} />
 
                   <CardContent>
                     <Typography variant="subtitle1" color="textSecondary">
                       {job.company} - {job.location}
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                      <strong>Experience:</strong> {job.experience} years
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                      <strong>Employment Type:</strong> {job.employmentType}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -113,9 +119,13 @@ function MyJobs() {
                     >
                       {job.description}
                     </Typography>
+                    <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {job.skills.map((skill, index) => (
+                        <Chip key={index} label={skill} variant="outlined" />
+                      ))}
+                    </Box>
                   </CardContent>
 
-                  {/* View Candidates Button */}
                   <CardActions sx={{ p: 2, justifyContent: "center" }}>
                     <Button
                       variant="contained"
@@ -129,7 +139,7 @@ function MyJobs() {
                       }}
                       onClick={() => {
                         const jobId = job._id?.$oid || job._id?.toString();
-                        const jobTitle = job.title; // Get job title
+                        const jobTitle = job.title;
                         console.log("Navigating to applied candidates:", { jobId, jobTitle });
 
                         navigate(`/appliedcandidates/${jobId}`, { state: { jobTitle } });
@@ -137,7 +147,6 @@ function MyJobs() {
                     >
                       View Candidates
                     </Button>
-
                   </CardActions>
                 </Card>
               </Grid>
