@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
-import {
-  Typography,
-  Container,
-  Button,
-  TextField,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-  Box,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Slide,
-  Stack,
-  IconButton,
-} from "@mui/material";
+import { Typography, Container, Button, TextField, Grid, Card, CardContent, CardActions, Box, Dialog, DialogActions, DialogContent, DialogTitle, Slide, Stack, IconButton, } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import axios from "axios";
+import { auth, storage } from "../Firebase"; // Import Firebase config
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { onAuthStateChanged } from "firebase/auth";
+
+// import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
+// import { storage } from "../../firebase/firebase.config"; // Firebase storage instance
+// import { auth } from "../../firebase/firebase.config";
+import { toast } from "react-toastify"; // Optional for notifications
+
+
 
 // Transition component for a smooth slide-up effect
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -38,6 +31,13 @@ function JobPost() {
   const [candidateName, setCandidateName] = useState("");
   const [email, setEmail] = useState("");
   const [resume, setResume] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [experience, setExperience] = useState("");
+  const [noticePeriod, setNoticePeriod] = useState("");
+  const [expectedSalary, setExpectedSalary] = useState("");
+  const [userId, setUserId] = useState(null);
+
 
   // Fetch job postings from the backend
   useEffect(() => {
@@ -76,31 +76,67 @@ function JobPost() {
     setOpenApplyDialog(true);
   };
 
-  // Handle job application submission
   const handleApply = async () => {
-    const formData = new FormData();
-    formData.append("candidate_name", candidateName);
-    formData.append("email", email);
-    if (resume) formData.append("resume", resume);
-
-    try {
-      // Extract the $oid value from the _id object
-      const jobId = selectedJob._id.$oid;
-      await axios.post(`http://localhost:8000/apply-job/${jobId}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      alert("Job application submitted successfully!");
-      setOpenApplyDialog(false);
-      setCandidateName("");
-      setEmail("");
-      setResume(null);
-    } catch (error) {
-      console.error("Error applying for job:", error);
-      alert("Failed to submit job application.");
+    if (!resume) {
+      return toast.error("Please upload a resume.");
     }
+  
+    // Get the logged-in user ID from Firebase Auth
+    const user = auth.currentUser;
+    if (!user) {
+      return toast.error("You must be logged in to apply.");
+    }
+    const userId = user.uid; // Firebase user ID
+    const jobId = selectedJob._id.$oid; // Ensure this ID is present
+  
+    // File Path in Firebase Storage
+    const filePath = `jobApplications/${jobId}/${userId}_${resume.name}`;
+    const fileRef = ref(storage, filePath);
+    
+    // Upload the resume to Firebase Storage
+    const uploadTask = uploadBytesResumable(fileRef, resume);
+  
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        console.log(`Upload is ${progress}% done`);
+      },
+      (error) => {
+        console.error("Upload failed:", error);
+        toast.error("Error uploading resume.");
+      },
+      async () => {
+        // Get the file URL after upload completes
+        const fileURL = await getDownloadURL(fileRef);
+        console.log("Resume uploaded at:", fileURL);
+        toast.success("Resume uploaded successfully!");
+  
+        // Send job application details to the backend
+        const formData = new FormData();
+        formData.append("candidate_name", candidateName);
+        formData.append("email", email);
+        formData.append("phone_number", phoneNumber);
+        formData.append("linkedin", linkedIn);
+        formData.append("experience", experience);
+        formData.append("notice_period", noticePeriod);
+        formData.append("expected_salary", expectedSalary);
+        formData.append("resume_url", fileURL); // Store resume URL instead of file
+  
+        try {
+          await axios.post(`http://localhost:8000/apply-job/${jobId}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          toast.success("Job application submitted successfully!");
+          setOpenApplyDialog(false);
+        } catch (error) {
+          console.error("Error submitting application:", error);
+          toast.error("Failed to submit job application.");
+        }
+      }
+    );
   };
+  
 
   return (
     <>
@@ -183,12 +219,26 @@ function JobPost() {
                     {job.company}
                   </Typography>
                 </Box>
+
                 {/* Card Content */}
                 <CardContent sx={{ flexGrow: 1, p: 2 }}>
                   <Box display="flex" alignItems="center" gap={1} mb={1}>
                     <LocationOnOutlinedIcon fontSize="small" />
                     <Typography variant="body2">{job.location}</Typography>
                   </Box>
+
+                  <Typography variant="body2" fontWeight="bold">
+                    Skills: {job.skills?.join(", ")}
+                  </Typography>
+
+                  <Typography variant="body2">
+                    Experience: {job.experience} years
+                  </Typography>
+
+                  <Typography variant="body2">
+                    Employment Type: {job.employmentType}
+                  </Typography>
+
                   <Typography
                     variant="body2"
                     sx={{
@@ -202,6 +252,7 @@ function JobPost() {
                     {job.description}
                   </Typography>
                 </CardContent>
+
                 {/* Card Actions */}
                 <CardActions sx={{ p: 2, justifyContent: "flex-end" }}>
                   <Button
@@ -218,6 +269,7 @@ function JobPost() {
           ))}
         </Grid>
       </Container>
+
 
       {/* Modern Application Form Dialog */}
       <Dialog
@@ -265,6 +317,43 @@ function JobPost() {
               onChange={(e) => setEmail(e.target.value)}
               variant="outlined"
             />
+            <TextField
+              label="Phone Number"
+              fullWidth
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              variant="outlined"
+            />
+            <TextField
+              label="LinkedIn Profile"
+              fullWidth
+              value={linkedIn}
+              onChange={(e) => setLinkedIn(e.target.value)}
+              variant="outlined"
+            />
+            <TextField
+              label="Experience (Years)"
+              fullWidth
+              type="number"
+              value={experience}
+              onChange={(e) => setExperience(e.target.value)}
+              variant="outlined"
+            />
+            <TextField
+              label="Notice Period"
+              fullWidth
+              value={noticePeriod}
+              onChange={(e) => setNoticePeriod(e.target.value)}
+              variant="outlined"
+            />
+            <TextField
+              label="Expected Salary"
+              fullWidth
+              type="number"
+              value={expectedSalary}
+              onChange={(e) => setExpectedSalary(e.target.value)}
+              variant="outlined"
+            />
             <Button
               variant="outlined"
               component="label"
@@ -289,6 +378,7 @@ function JobPost() {
           </Button>
         </DialogActions>
       </Dialog>
+
     </>
   );
 }

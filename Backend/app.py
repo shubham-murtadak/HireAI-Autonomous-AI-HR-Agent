@@ -104,6 +104,7 @@ async def get_jobs_by_hr(hr_id: str):
     * Parameters:
     *  hr_id: str
     """
+    print("inside get job function :::")
     try:
         # Fetch jobs by hr_id
         jobs_cursor = jobs_collection.find({"hr_id": hr_id})
@@ -156,54 +157,68 @@ async def get_candidates_by_jobid(job_id: str):
     
 #post job endpoint
 @app.post("/job-post/{hr_id}")
-async def post_job(hr_id:str,title: str = Form(...), description: str = Form(...),location: str = Form(...),company: str = Form(...)):
+async def post_job(hr_id:str,title: str = Form(...),skills: str = Form(...),experience: str= Form(...),employmentType: str = Form(...), description: str = Form(...),location: str = Form(...),company: str = Form(...)):
     """
     * method: post_job
-    * description: Handles job posting requests by accepting job title, description, location, and company details. It validates the input and stores the job data in the database.
+    * description: Handles job posting requests by accepting job title, skills, experience, employment type, description, location, and company details.
     * return: JSONResponse
     *
     * who             when            version  change
     * ----------      -----------     -------  ------------------------------
     * Shubham M       31-JAN-2025     1.0      initial creation
+    * Shubham M       16-FEB-2025     1.1      Added skills, experience, and employmentType fields
     *
     * Parameters
     *   title: The title of the job position.
+    *   skills: Required skills for the job (comma-separated).
+    *   experience: Required experience in years.
+    *   employmentType: The type of employment (Full-time, Part-time, etc.).
     *   description: A detailed description of the job responsibilities and requirements.
     *   location: The location of the job.
     *   company: The company offering the job.
     """
+    print("Inside job post function ")
 
     try:
-        return await post_job_function(hr_id,title, description, location, company)
+        return await post_job_function(hr_id, title, skills, experience, employmentType, description, location, company)
     except Exception as e:
         print("Error posting job:", e)
 
 
-#apply job endpoint
+# apply job endpoint
 @app.post("/apply-job/{job_id}")
-async def apply_job(job_id: str,candidate_name: str = Form(...),email: str = Form(...),resume: UploadFile = None):
+async def apply_job(job_id: str,candidate_name: str = Form(...),email: str = Form(...),phone_number: str = Form(...),linkedin: str = Form(...),experience: str = Form(...),notice_period: str = Form(...),expected_salary: str = Form(...),resume_url: str = Form(...)):
     """
     * method: apply_job
-    * description: Handles job application requests by accepting job ID, candidate name, email, and an optional resume. It validates the job ID, processes the application, and stores the application data.
+    * description: Handles job application requests by accepting job ID, candidate name, email, and additional details.
     * return: JSONResponse
     *
     * who             when            version  change
     * ----------      -----------     -------  ------------------------------
-    * Shubham M       31-JAN-2025     1.0      initial creation
+    * Shubham M       31-JAN-2025     1.0      Initial creation
+    * Shubham M       16-FEB-2025     1.1      Added phone_number, LinkedIn, experience, notice_period, expected_salary, and resume_url fields.
     *
     * Parameters
     *   job_id: The unique identifier for the job the candidate is applying to.
     *   candidate_name: The name of the candidate applying for the job.
     *   email: The email address of the candidate.
-    *   resume (optional): The resume file of the candidate.
+    *   phone_number: Contact number of the candidate.
+    *   linkedin: LinkedIn profile link of the candidate.
+    *   experience: Work experience in years.
+    *   notice_period: Notice period duration.
+    *   expected_salary: Expected salary of the candidate.
+    *   resume_url: URL of the resume file uploaded to Firebase.
     """
-    print(job_id,candidate_name)
+    print(job_id, candidate_name, email, phone_number, linkedin, experience, notice_period, expected_salary, resume_url)
+
     # Validate job_id to be a valid ObjectId string
     if not ObjectId.is_valid(job_id):
         raise HTTPException(status_code=400, detail="Invalid job ID format")
 
     try:
-        return await apply_job_function(job_id, candidate_name, email,resume)
+        return await apply_job_function(
+            job_id, candidate_name, email, phone_number, linkedin, experience, notice_period, expected_salary, resume_url
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to apply for the job")
 

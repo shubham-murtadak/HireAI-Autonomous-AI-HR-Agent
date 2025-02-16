@@ -2,13 +2,8 @@ import os
 from bson import ObjectId
 from json import JSONEncoder
 from fastapi.responses import JSONResponse
-from fastapi import UploadFile, HTTPException
+from fastapi import HTTPException
 from Utils.database import jobs_collection, applications_collection
-
-
-
-UPLOAD_FOLDER = "upload"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 # Custom encoder to handle ObjectId
@@ -19,21 +14,27 @@ class CustomJSONEncoder(JSONEncoder):
         return super().default(o)
 
 
-async def apply_job_function(job_id: str, candidate_name: str, email: str,resume: UploadFile = None):
+async def apply_job_function(job_id: str, candidate_name: str, email: str, phone_number: str, linkedin: str, experience: str, notice_period: str, expected_salary: str, resume_url: str):
     """
     * method: apply_job_function
-    * description: Handles job application submissions, validates job details, saves the resume if provided, and stores application data in the database.
+    * description: Handles job application submissions, validates job details, and stores application data in the database.
     * return: JSONResponse
     *
     * who             when            version  change
     * ----------      -----------     -------  ------------------------------
     * Shubham M       31-JAN-2025     1.0      initial creation
+    * Shubham M       16-FEB-2025     1.1      Removed resume file saving, added resume_url and additional fields
     *
     * Parameters
     *   job_id: The unique identifier of the job.
     *   candidate_name: The name of the candidate.
     *   email: The email address of the candidate.
-    *   resume: The resume file of the candidate .
+    *   phone_number: The phone number of the candidate.
+    *   linkedin: The LinkedIn profile URL of the candidate.
+    *   experience: The experience level of the candidate.
+    *   notice_period: The notice period of the candidate.
+    *   expected_salary: The expected salary of the candidate.
+    *   resume_url: The Firebase storage link of the candidate's resume.
     """
 
     try:
@@ -44,17 +45,6 @@ async def apply_job_function(job_id: str, candidate_name: str, email: str,resume
         if not job:
             raise HTTPException(status_code=404, detail="Job not found")
 
-        file_path = None
-
-        print("Resume is :",resume)
-        # If resume is provided, save the file
-        if resume:
-            resume_filename = resume.filename
-            file_path = os.path.join(UPLOAD_FOLDER, resume_filename)
-            print("File path is :",file_path)
-            with open(file_path, "wb") as f:
-                f.write(await resume.read())
-
         # Convert job_id to string
         job_id = str(job["_id"]) 
 
@@ -64,7 +54,12 @@ async def apply_job_function(job_id: str, candidate_name: str, email: str,resume
             "job_id": job_id, 
             "candidate_name": candidate_name,
             "email": email,
-            "resume_path": file_path  # Just save the path or filename in DB
+            "phone_number": phone_number,
+            "linkedin": linkedin,
+            "experience": experience,
+            "notice_period": notice_period,
+            "expected_salary": expected_salary,
+            "resume_url": resume_url 
         }
 
         # Save application to database
@@ -73,10 +68,15 @@ async def apply_job_function(job_id: str, candidate_name: str, email: str,resume
         return JSONResponse(content={
             "message": "Application submitted successfully!",
             "application_details": {
-                "job_id": job_id,
-                "candidate_name": candidate_name,
-                "email": email,
-                "resume_path": file_path  # Send the resume path, not the file object itself
+            "job_id": job_id, 
+            "candidate_name": candidate_name,
+            "email": email,
+            "phone_number": phone_number,
+            "linkedin": linkedin,
+            "experience": experience,
+            "notice_period": notice_period,
+            "expected_salary": expected_salary,
+            "resume_url": resume_url 
             }
         })
 

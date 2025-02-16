@@ -25,6 +25,7 @@ function MyJobs() {
       try {
         const auth = getAuth();
         const hrId = auth.currentUser?.uid; // Get HR ID from Firebase
+        console.log("Hr id is :", hrId)
         if (!hrId) {
           console.error("HR ID not found. Please ensure you are logged in.");
           return;
@@ -127,13 +128,16 @@ function MyJobs() {
                         "&:hover": { bgcolor: "text.secondary" },
                       }}
                       onClick={() => {
-                        const jobId = job._id?.$oid || job._id?.toString(); // Handle both ObjectId and string
-                        console.log("job._id:", jobId);
-                        navigate(`/appliedcandidates/${jobId}`);
+                        const jobId = job._id?.$oid || job._id?.toString();
+                        const jobTitle = job.title; // Get job title
+                        console.log("Navigating to applied candidates:", { jobId, jobTitle });
+
+                        navigate(`/appliedcandidates/${jobId}`, { state: { jobTitle } });
                       }}
                     >
                       View Candidates
                     </Button>
+
                   </CardActions>
                 </Card>
               </Grid>
