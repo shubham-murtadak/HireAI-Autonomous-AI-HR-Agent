@@ -6,9 +6,9 @@ Your intelligent solution for transforming HR processes through automation and A
 
 **HireAI** is an intelligent HR agent revolutionizing recruitment with **Generative AI** 🤖, **NLP** 🧠, and **Machine Learning** 📊. It automates critical tasks like **job application screening** 📝, **resume parsing** 📄, **candidate ranking** 🏆, and **autonomous email monitoring** 📧 to streamline the hiring process.
 
-Using **LLMs** and **function calling**, **HiretAI** can:
+Using **LLMs** and **function calling**, **HireAI** can:
 - **Monitor emails** automatically, classifying them based on **job roles** 🧑‍💼 and **other queries** 💬.
-- **Parse attachments resumes** to extract essential details like **skills** 🛠️, **experience** 🏢, and **education** 🎓.  
+- **Parse attachment resumes** to extract essential details like **skills** 🛠️, **experience** 🏢, and **education** 🎓.  
 - **Match candidates** to job descriptions for the best fit 📈.  
 - **Conduct initial interviews** using **AI-powered conversations** 💬, **analyze responses** 📊, and **rank candidates** dynamically.  
 
@@ -69,13 +69,30 @@ Say goodbye to tedious processes—**HireAI** ensures **faster**, **unbiased**, 
 
 ---
 
-### **✨ Empowering Smarter Hiring with HireAI!**  
-🌟 Revolutionize your HR processes today! 🌟  
+## **📸 Screenshots of HireAI in Action**  
 
-📸 Screenshots of HireAI in Action
+### **1️⃣ Homepage**
+![Homepage](Screenshots/a.png)
 
-![Screenshot](Screenshots/a.png)
-![Screenshot](Screenshots/b.png)
-![Screenshot](Screenshots/c.png)
-![Screenshot](Screenshots/d.png)
+### **2️⃣ AI Chatbot for Candidate Queries**
+![Chatbot](Screenshots/b.png)
+
+### **3️⃣ Post a Job**
+![Post Job](Screenshots/c.png)
+
+### **4️⃣ Job Listings Page (General View)**
+![Job Listing](Screenshots/d.png)
+
+### **5️⃣ Job Listings Page (Posted by HR)**
+![HR Job Listing](Screenshots/e.png)
+
+### **6️⃣ Candidate Listings for a Specific Job (Viewed by HR)**
+![Candidate Listing](Screenshots/f.png)
+
+### **7️⃣ Candidate Resume View (Accessed from Candidate Listing Page)**
+![View Resume](Screenshots/g.png)
+
 ---
+
+### **✨ Empowering Smarter Hiring with HireAI!**  
+🌟 Revolutionize your HR processes today! 🌟
